@@ -1,0 +1,12 @@
+{
+  "en": {
+    "translation": {
+      "HELP_REPROMPT_MESSAGE": "Which line shall I check for delays?",
+      "HELP_MESSAGE": "You can ask me to check for delays on London Underground, Overground, Docklands Light Railway, or TfL Rail lines. You can also say stop to quit... %s",
+      "GOOD_SERVICE_MESSAGE": "There is a good service on %s",
+      "STOP_MESSAGE": "Goodbye!",
+      "REQUEST_ERROR_MESSAGE": "Sorry, I'm unable to check for delays at the moment.",
+      "UNHANDLED_MESSAGE": "Sorry, I didn't quite catch that."
+    }
+  }
+}

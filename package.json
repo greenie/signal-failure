@@ -1,0 +1,25 @@
+{
+  "name": "signal-failure",
+  "version": "1.0.0",
+  "description": "An Alexa skill for checking the status of London Underground, Overground, DLR, and TfL Rail lines.",
+  "main": "index.js",
+  "scripts": {
+    "archive": "rm -f lambda.zip && zip -q -r lambda.zip node_modules index.js translations.json package.json package-lock.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greenie/signal-failure.git"
+  },
+  "author": "Joe Green <joe@joegreen.co.uk>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greenie/signal-failure/issues"
+  },
+  "homepage": "https://github.com/greenie/signal-failure#readme",
+  "dependencies": {
+    "alexa-sdk": "^1.0.11",
+    "aws-sdk": "^2.82.0",
+    "eslint": "^4.2.0",
+    "got": "^7.1.0"
+  }
+}
