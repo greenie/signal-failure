@@ -1,6 +1,6 @@
 const AWS = require('aws-sdk');
 const Alexa = require('alexa-sdk');
-const got = require('got');
+const axios = require('axios');
 const translations = require('./translations');
 
 let secrets = {};
@@ -57,24 +57,42 @@ const handlers = {
     const lineSlot = this.event.request.intent.slots.Line;
     const line = getValueForSlot(lineSlot);
     const requestOptions = {
-      path: `/Line/${line}/Disruption`,
-      query: {
+      method: 'get',
+      url: `/Line/${line}/Disruption`,
+      baseURL: 'https://api.tfl.gov.uk',
+      params: {
         app_id: TFL_APP_ID,
         app_key: TFL_API_KEY
-      },
-      json: true
+      }
     };
 
-    got('https://api.tfl.gov.uk', requestOptions)
+    axios(requestOptions)
       .then(response => {
-        if (response.body.length === 0) {
+        console.log(response);
+
+        if (response.data.length === 0) {
           this.emit(':tell', this.t('GOOD_SERVICE_MESSAGE', fullLineName(line)));
         } else {
-          this.emit(':tell', response.body[0].description);
+          this.emit(':tell', response.data[0].description);
         }
       })
       .catch(error => {
-        console.log(JSON.stringify(error));
+        const { response, request, message } = error;
+
+        if (response) {
+          const { data, status, headers } = response;
+
+          console.log(JSON.stringify({
+            data,
+            status,
+            headers
+          }));
+        } else if (request) {
+          console.log(request);
+        } else {
+          console.log(message);
+        }
+
         this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'));
       });
   },
