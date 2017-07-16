@@ -27,7 +27,7 @@ const lineIdToName = id => {
   }
 };
 
-const fullLineName = line => {
+const fullLineName = id => {
   const noPrefix = ['tfl-rail'];
   const noSuffix = noPrefix.concat(['london-overground', 'dlr'])
   const prefix = !noPrefix.includes(id) ? 'the' : null;
