@@ -55,7 +55,6 @@ const handlers = {
     this.emit(':ask', this.t('HELP_REPROMPT_MESSAGE'));
   },
   'GetDisruptionsIntent': function () {
-    console.log(this);
     console.log(JSON.stringify(this.event.request));
 
     const { TFL_APP_ID, TFL_API_KEY } = secrets;
