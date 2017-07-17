@@ -23,7 +23,7 @@ const lineIdToName = id => {
       return 'DLR';
 
     default:
-      return id;
+      return `${id.charAt(0).toUpperCase()}${id.slice(1)}`;
   }
 };
 
@@ -76,29 +76,44 @@ const handlers = {
 
         if (response.data.length === 0) {
           const goodService = this.t('GOOD_SERVICE_MESSAGE', fullLineName(line));
-          this.emit(':tell', responseToSpeak(goodService));
+
+          this.emit(
+            ':tellWithCard',
+            responseToSpeak(goodService),
+            this.t('GOOD_SERVICE_TITLE'),
+            goodService
+          );
         } else {
-          this.emit(':tell', responseToSpeak(response.data[0].description));
+          const description = response.data[0].description;
+
+          this.emit(
+            ':tellWithCard',
+            responseToSpeak(description),
+            this.t('DELAYS_TITLE'),
+            description
+          );
         }
       })
       .catch(error => {
         const { response, request, message } = error;
+        const errorMessage = this.t('REQUEST_ERROR_MESSAGE');
 
         if (response) {
           const { data, status, headers } = response;
 
-          console.log(JSON.stringify({
-            data,
-            status,
-            headers
-          }));
+          console.log(JSON.stringify({ data, status, headers }));
         } else if (request) {
           console.log(request);
         } else {
           console.log(message);
         }
 
-        this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'));
+        this.emit(
+          ':tellWithCard',
+          errorMessage,
+          this.t('REQUEST_ERROR_TITLE'),
+          errorMessage
+        );
       });
   },
   'AMAZON.HelpIntent': function () {
