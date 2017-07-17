@@ -20,7 +20,7 @@ const lineIdToName = id => {
       return 'Hammersmith and City';
 
     case 'dlr':
-      return 'Docklands Light Railway';
+      return 'DLR';
 
     default:
       return id;
@@ -46,11 +46,16 @@ const getValueForSlot = slot => {
   return value;
 };
 
+const responseToSpeak = response => {
+  return response.replace(/DLR/, '<say-as interpret-as="spell-out">DLR</say-as>');
+};
+
 const handlers = {
   'LaunchRequest': function () {
     this.emit(':ask', this.t('HELP_REPROMPT_MESSAGE'));
   },
   'GetDisruptionsIntent': function () {
+    console.log(this);
     console.log(JSON.stringify(this.event.request));
 
     const { TFL_APP_ID, TFL_API_KEY } = secrets;
@@ -71,9 +76,10 @@ const handlers = {
         console.log(response);
 
         if (response.data.length === 0) {
-          this.emit(':tell', this.t('GOOD_SERVICE_MESSAGE', fullLineName(line)));
+          const goodService = this.t('GOOD_SERVICE_MESSAGE', fullLineName(line));
+          this.emit(':tell', responseToSpeak(goodService));
         } else {
-          this.emit(':tell', response.data[0].description);
+          this.emit(':tell', responseToSpeak(response.data[0].description));
         }
       })
       .catch(error => {
@@ -97,9 +103,11 @@ const handlers = {
       });
   },
   'AMAZON.HelpIntent': function () {
+    const fullHelpMessage = this.t('HELP_MESSAGE', this.t('HELP_REPROMPT_MESSAGE'));
+
     this.emit(
       ':ask',
-      this.t('HELP_MESSAGE', 'HELP_REPROMPT_MESSAGE'),
+      responseToSpeak(fullHelpMessage),
       this.t('HELP_REPROMPT_MESSAGE')
     );
   },
