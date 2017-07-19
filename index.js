@@ -29,7 +29,7 @@ const lineIdToName = id => {
 
 const fullLineName = id => {
   const noPrefix = ['tfl-rail'];
-  const noSuffix = noPrefix.concat(['london-overground', 'dlr'])
+  const noSuffix = noPrefix.concat(['london-overground', 'dlr']);
   const prefix = !noPrefix.includes(id) ? 'the' : null;
   const suffix = !noSuffix.includes(id) ? 'line' : null;
 
@@ -143,12 +143,12 @@ const processEvent = (event, context, callback) => {
 
   // Fix for the Service Simulator setting applicationId to 'applicationId'
   if (event.context && event.context.System.application.applicationId == 'applicationId') {
-  	event.context.System.application.applicationId = event.session.application.applicationId;
+    event.context.System.application.applicationId = event.session.application.applicationId;
   }
 
   alexa.registerHandlers(handlers);
   alexa.execute();
-}
+};
 
 exports.handler = (event, context, callback) => {
   if (Object.keys(secrets).length !== 0) {
