@@ -37,10 +37,11 @@ const fullLineName = id => {
 };
 
 const getValueForSlot = slot => {
-  const { resolutions, value } = slot;
+  const { resolutions: { resolutionsPerAuthority }, value } = slot;
 
-  if (resolutions) {
-    return resolutions.resolutionsPerAuthority[0].values[0].value.id;
+  if (resolutionsPerAuthority) {
+    const matching = resolutionsPerAuthority.find(r => r.status.code === 'ER_SUCCESS_MATCH');
+    return matching ? matching.values[0].value.id : null;
   }
 
   return value;
@@ -60,6 +61,11 @@ const handlers = {
     const { TFL_APP_ID, TFL_API_KEY } = secrets;
     const lineSlot = this.event.request.intent.slots.Line;
     const line = getValueForSlot(lineSlot);
+
+    if (!line) {
+      return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
+    }
+
     const requestOptions = {
       method: 'get',
       url: `/Line/${line}/Disruption`,
@@ -96,11 +102,9 @@ const handlers = {
       })
       .catch(error => {
         const { response, request, message } = error;
-        const errorMessage = this.t('REQUEST_ERROR_MESSAGE');
 
         if (response) {
           const { data, status, headers } = response;
-
           console.log(JSON.stringify({ data, status, headers }));
         } else if (request) {
           console.log(request);
@@ -108,12 +112,7 @@ const handlers = {
           console.log(message);
         }
 
-        this.emit(
-          ':tellWithCard',
-          errorMessage,
-          this.t('REQUEST_ERROR_TITLE'),
-          errorMessage
-        );
+        this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'));
       });
   },
   'AMAZON.HelpIntent': function () {
@@ -132,7 +131,7 @@ const handlers = {
     this.emit(':tell', this.t('STOP_MESSAGE'));
   },
   'Unhandled': function () {
-    this.emit(':ask', this.t('UNHANDLED_MESSAGE'), this.t('UNHANDLED_MESSAGE'));
+    this.emit(':ask', this.t('UNHANDLED_MESSAGE'));
   }
 };
 
