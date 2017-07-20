@@ -37,9 +37,10 @@ const fullLineName = id => {
 };
 
 const getValueForSlot = slot => {
-  const { resolutions: { resolutionsPerAuthority }, value } = slot;
+  const { resolutions, value } = slot;
 
-  if (resolutionsPerAuthority) {
+  if (resolutions) {
+    const { resolutionsPerAuthority } = resolutions;
     const matching = resolutionsPerAuthority.find(r => r.status.code === 'ER_SUCCESS_MATCH');
     return matching ? matching.values[0].value.id : null;
   }
@@ -106,6 +107,10 @@ const handlers = {
         if (response) {
           const { data, status, headers } = response;
           console.log(JSON.stringify({ data, status, headers }));
+
+          if (response.status === 404) {
+            return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
+          }
         } else if (request) {
           console.log(request);
         } else {
