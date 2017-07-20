@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const Alexa = require('alexa-sdk');
 const axios = require('axios');
-const translations = require('./translations');
+const translations = require('./resources/translations');
 
 let secrets = {};
 
