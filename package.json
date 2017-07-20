@@ -4,7 +4,7 @@
   "description": "An Alexa skill for checking the status of London Underground, Overground, DLR, and TfL Rail lines.",
   "main": "index.js",
   "scripts": {
-    "archive": "rm -f lambda.zip && zip -q -r lambda.zip node_modules index.js translations.json package.json package-lock.json"
+    "archive": "rm -f lambda.zip && zip -q -r lambda.zip node_modules resources index.js package.json package-lock.json"
   },
   "repository": {
     "type": "git",
