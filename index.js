@@ -67,9 +67,10 @@ const handlers = {
       return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
     }
 
+    const lineDisruptionsUrl = `/Line/${line}/Disruption`;
+    const modeDisruptionsUrl = `/Line/Mode/${line}/Disruption`;
     const requestOptions = {
       method: 'get',
-      url: `/Line/${line}/Disruption`,
       baseURL: 'https://api.tfl.gov.uk',
       params: {
         app_id: TFL_APP_ID,
@@ -77,21 +78,28 @@ const handlers = {
       }
     };
 
+    requestOptions.url = (line === 'tube') ? modeDisruptionsUrl : lineDisruptionsUrl;
+
     axios(requestOptions)
       .then(response => {
-        console.log(response);
+        const { status, data, headers } = response;
+        console.log(JSON.stringify({ status, data, headers }));
 
-        if (response.data.length === 0) {
-          const goodService = this.t('GOOD_SERVICE_MESSAGE', fullLineName(line));
+        if (data.length === 0) {
+          const goodService = (line === 'tube')
+            ? this.t('GOOD_SERVICE_ALL_LINES_MESSAGE')
+            : responseToSpeak(this.t('GOOD_SERVICE_MESSAGE', fullLineName(line)));
 
           this.emit(
             ':tellWithCard',
-            responseToSpeak(goodService),
+            goodService,
             this.t('GOOD_SERVICE_TITLE'),
             goodService
           );
         } else {
-          const description = response.data[0].description;
+          const description = (line === 'tube')
+            ? data.map(({ description }) => description).filter(d => d).join('')
+            : data[0].description;
 
           this.emit(
             ':tellWithCard',
@@ -105,8 +113,8 @@ const handlers = {
         const { response, request, message } = error;
 
         if (response) {
-          const { data, status, headers } = response;
-          console.log(JSON.stringify({ data, status, headers }));
+          const { status, data, headers } = response;
+          console.log(JSON.stringify({ status, data, headers }));
 
           if (response.status === 404) {
             return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
