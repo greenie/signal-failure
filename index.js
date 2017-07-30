@@ -98,14 +98,14 @@ const handlers = {
           );
         } else {
           const description = (line === 'tube')
-            ? data.map(({ description }) => description).filter(d => d).join('')
+            ? data.map(({ description }) => description).filter(d => d).join('<break strength="strong" />')
             : data[0].description;
 
           this.emit(
             ':tellWithCard',
             responseToSpeak(description),
             this.t('DELAYS_TITLE'),
-            description
+            description.replace(/<break[\s+\w*="\w*"]*\s*\/>/g, '\r\n')
           );
         }
       })
