@@ -5,6 +5,14 @@ service:
 custom:
   default_stage: dev
   secrets: ${file(secrets.yml)}
+  optimize:
+    presets:
+      - - env
+        - targets:
+            node: current
+    plugins:
+      - transform-runtime
+      - transform-object-rest-spread
 
 provider:
   name: aws
@@ -36,3 +44,6 @@ functions:
     memorySize: 128
     events:
       - alexaSkill
+
+plugins:
+  - serverless-plugin-optimize
