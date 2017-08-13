@@ -1,0 +1,38 @@
+service:
+  name: signalFailure
+  awsKmsKeyArn: arn:aws:kms:eu-west-1:614386431145:key/7b894604-53a4-48ac-8681-5893612cc626
+
+custom:
+  default_stage: dev
+  secrets: ${file(secrets.yml)}
+
+provider:
+  name: aws
+  region: eu-west-1
+  stage: ${opt:stage, self:custom.default_stage}
+  runtime: nodejs6.10
+  memorySize: 128
+  environment:
+    SKILL_ID: ${self:custom.secrets.SKILL_ID}
+    TFL_API_KEY: ${self:custom.secrets.TFL_API_KEY}
+    TFL_APP_ID: ${self:custom.secrets.TFL_APP_ID}
+
+package:
+  exclude:
+    - .git/**
+    - .eslintrc.json
+    - .gitignore
+    - .serverless*
+    - LICENCE
+    - README.md
+    - secrets.yml
+  excludeDevDependencies: true
+
+functions:
+  handler:
+    timeout: 3
+    handler: index.handler
+    name: signalFailure-${self:provider.stage}
+    memorySize: 128
+    events:
+      - alexaSkill

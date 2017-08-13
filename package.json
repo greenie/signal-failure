@@ -4,7 +4,11 @@
   "description": "An Alexa skill for checking the status of London Underground, Overground, DLR, and TfL Rail lines.",
   "main": "index.js",
   "scripts": {
-    "archive": "rm -f signal-failure.zip && zip -q -r signal-failure.zip node_modules resources index.js package.json package-lock.json"
+    "deploy": "serverless deploy",
+    "deploy:function": "serverless deploy function -f",
+    "deploy:production": "serverless deploy --stage production",
+    "predebug:size": "rm -rf .serverless-tmp",
+    "debug:size": "serverless package --package .serverless-tmp && cd .serverless-tmp && unzip *.zip && du -sh *"
   },
   "repository": {
     "type": "git",
@@ -22,6 +26,7 @@
     "axios": "^0.16.2"
   },
   "devDependencies": {
-    "eslint": "^4.3.0"
+    "eslint": "^4.3.0",
+    "serverless": "^1.19.0"
   }
 }

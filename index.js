@@ -163,6 +163,8 @@ const processEvent = (event, context, callback) => {
 };
 
 exports.handler = (event, context, callback) => {
+  console.log(JSON.stringify(process.env));
+
   if (Object.keys(secrets).length !== 0) {
     processEvent(event, context, callback);
   } else {
