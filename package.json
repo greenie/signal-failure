@@ -6,9 +6,7 @@
   "scripts": {
     "deploy": "serverless deploy",
     "deploy:function": "serverless deploy function -f",
-    "deploy:production": "serverless deploy --stage production",
-    "predebug:size": "rm -rf .serverless-tmp",
-    "debug:size": "serverless package --package .serverless-tmp && cd .serverless-tmp && unzip *.zip && du -sh *"
+    "deploy:production": "serverless deploy --stage production"
   },
   "repository": {
     "type": "git",
