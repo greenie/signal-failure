@@ -1,156 +1,14 @@
-const AWS = require('aws-sdk');
-const Alexa = require('alexa-sdk');
-const axios = require('axios');
-const translations = require('./resources/translations');
+import Alexa from 'alexa-sdk';
+import translations from './resources/translations';
+import LaunchRequest from './intents/launch-request';
+import GetDisruptionsIntent from './intents/get-disruptions-intent';
+import AmazonDefaultIntents from './intents/amazon-default-intents';
+import Unhandled from './intents/unhandled';
+import getSecret from './helpers/secrets';
 
-let secrets = {};
-
-const lineIdToName = id => {
-  switch (id) {
-    case 'tfl-rail':
-      return 'TfL Rail';
-
-    case 'waterloo-city':
-      return 'Waterloo and City';
-
-    case 'london-overground':
-      return 'Overground';
-
-    case 'hammersmith-city':
-      return 'Hammersmith and City';
-
-    case 'dlr':
-      return 'DLR';
-
-    default:
-      return `${id.charAt(0).toUpperCase()}${id.slice(1)}`;
-  }
-};
-
-const fullLineName = id => {
-  const noPrefix = ['tfl-rail'];
-  const noSuffix = noPrefix.concat(['london-overground', 'dlr']);
-  const prefix = !noPrefix.includes(id) ? 'the' : null;
-  const suffix = !noSuffix.includes(id) ? 'line' : null;
-
-  return [prefix, lineIdToName(id), suffix].filter(p => p).join(' ');
-};
-
-const getValueForSlot = slot => {
-  const { resolutions, value } = slot;
-
-  if (resolutions) {
-    const { resolutionsPerAuthority } = resolutions;
-    const matching = resolutionsPerAuthority.find(r => r.status.code === 'ER_SUCCESS_MATCH');
-    return matching ? matching.values[0].value.id : null;
-  }
-
-  return value;
-};
-
-const responseToSpeak = response => {
-  return response.replace(/DLR/, '<say-as interpret-as="spell-out">DLR</say-as>');
-};
-
-const handlers = {
-  'LaunchRequest': function () {
-    this.emit(':ask', this.t('HELP_REPROMPT_MESSAGE'));
-  },
-  'GetDisruptionsIntent': function () {
-    console.log(JSON.stringify(this.event.request));
-
-    const { TFL_APP_ID, TFL_API_KEY } = secrets;
-    const lineSlot = this.event.request.intent.slots.Line;
-    const line = getValueForSlot(lineSlot);
-
-    if (!line) {
-      return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
-    }
-
-    const lineDisruptionsUrl = `/Line/${line}/Disruption`;
-    const modeDisruptionsUrl = `/Line/Mode/${line}/Disruption`;
-    const requestOptions = {
-      method: 'get',
-      baseURL: 'https://api.tfl.gov.uk',
-      params: {
-        app_id: TFL_APP_ID,
-        app_key: TFL_API_KEY
-      }
-    };
-
-    requestOptions.url = (line === 'tube') ? modeDisruptionsUrl : lineDisruptionsUrl;
-
-    axios(requestOptions)
-      .then(response => {
-        const { status, data, headers } = response;
-        console.log(JSON.stringify({ status, data, headers }));
-
-        if (data.length === 0) {
-          const goodService = (line === 'tube')
-            ? this.t('GOOD_SERVICE_ALL_LINES_MESSAGE')
-            : responseToSpeak(this.t('GOOD_SERVICE_MESSAGE', fullLineName(line)));
-
-          this.emit(
-            ':tellWithCard',
-            goodService,
-            this.t('GOOD_SERVICE_TITLE'),
-            goodService
-          );
-        } else {
-          const description = (line === 'tube')
-            ? data.map(({ description }) => description).filter(d => d).join('<break strength="strong" />')
-            : data[0].description;
-
-          this.emit(
-            ':tellWithCard',
-            responseToSpeak(description),
-            this.t('DELAYS_TITLE'),
-            description.replace(/<break[\s+\w*="\w*"]*\s*\/>/g, '\r\n')
-          );
-        }
-      })
-      .catch(error => {
-        const { response, request, message } = error;
-
-        if (response) {
-          const { status, data, headers } = response;
-          console.log(JSON.stringify({ status, data, headers }));
-
-          if (response.status === 404) {
-            return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
-          }
-        } else if (request) {
-          console.log(request);
-        } else {
-          console.log(message);
-        }
-
-        this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'));
-      });
-  },
-  'AMAZON.HelpIntent': function () {
-    const fullHelpMessage = this.t('HELP_MESSAGE', this.t('HELP_REPROMPT_MESSAGE'));
-
-    this.emit(
-      ':ask',
-      responseToSpeak(fullHelpMessage),
-      this.t('HELP_REPROMPT_MESSAGE')
-    );
-  },
-  'AMAZON.CancelIntent': function () {
-    this.emit(':tell', this.t('STOP_MESSAGE'));
-  },
-  'AMAZON.StopIntent': function () {
-    this.emit(':tell', this.t('STOP_MESSAGE'));
-  },
-  'Unhandled': function () {
-    this.emit(':ask', this.t('UNHANDLED_MESSAGE'));
-  }
-};
-
-const processEvent = (event, context, callback) => {
+export const handler = async (event, context, callback) => {
   let alexa = Alexa.handler(event, context, callback);
-  alexa.appId = secrets.SKILL_ID;
+  alexa.appId = await getSecret('SKILL_ID');
   alexa.resources = translations;
 
   // Fix for the Service Simulator setting applicationId to 'applicationId'
@@ -158,41 +16,13 @@ const processEvent = (event, context, callback) => {
     event.context.System.application.applicationId = event.session.application.applicationId;
   }
 
+  const handlers = {
+    LaunchRequest,
+    GetDisruptionsIntent,
+    ...AmazonDefaultIntents,
+    Unhandled
+  };
+
   alexa.registerHandlers(handlers);
   alexa.execute();
-};
-
-exports.handler = (event, context, callback) => {
-  if (Object.keys(secrets).length !== 0) {
-    processEvent(event, context, callback);
-  } else {
-    const kms = new AWS.KMS();
-
-    const decrypt = secret => {
-      return new Promise((resolve, reject) => {
-        const params = { CiphertextBlob: new Buffer(process.env[secret], 'base64') };
-
-        kms.decrypt(params, (err, data) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve([secret, data.Plaintext.toString('ascii')]);
-          }
-        });
-      });
-    };
-
-    const toDecrypt = ['SKILL_ID', 'TFL_APP_ID', 'TFL_API_KEY'];
-
-    Promise.all(toDecrypt.map(decrypt))
-      .then(decrypted => {
-        secrets = decrypted.reduce((prev, secret) => {
-          prev[secret[0]] = secret[1];
-          return prev;
-        }, secrets);
-
-        processEvent(event, context, callback);
-      })
-      .catch(console.log);
-  }
 };
