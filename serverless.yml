@@ -9,10 +9,11 @@ custom:
     presets:
       - - env
         - targets:
-            node: current
+            node: '6.10'
     plugins:
       - transform-runtime
       - transform-object-rest-spread
+    prefix: dist
 
 provider:
   name: aws
