@@ -20,11 +20,12 @@ const lineIdToName = id => {
   }
 };
 
-export default function fullLineName(id) {
+export default function fullLineName({ name, id }) {
   const noPrefix = ['tfl-rail'];
   const noSuffix = noPrefix.concat(['london-overground', 'dlr']);
   const prefix = !noPrefix.includes(id) ? 'the' : null;
   const suffix = !noSuffix.includes(id) ? 'line' : null;
+  const lineName = name ? name : lineIdToName(id);
 
-  return [prefix, lineIdToName(id), suffix].filter(p => p).join(' ');
+  return [prefix, lineName, suffix].filter(p => p).join(' ');
 }

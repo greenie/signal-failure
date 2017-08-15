@@ -1,5 +1,5 @@
 import axios from 'axios';
-import getValueForSlot from '../helpers/get-value-for-slot';
+import getCustomSlotValue from '../helpers/get-custom-slot-value';
 import responseToSpeak from '../helpers/response-to-speak';
 import fullLineName from '../helpers/full-line-name';
 import getSecret from '../helpers/secrets';
@@ -11,18 +11,18 @@ export default async function () {
   const TFL_APP_ID = await getSecret('TFL_APP_ID');
   const TFL_API_KEY = await getSecret('TFL_API_KEY');
   const lineSlot = this.event.request.intent.slots.Line;
-  const line = getValueForSlot(lineSlot);
+  const line = getCustomSlotValue(lineSlot);
 
-  if (!line) {
+  if (!line.id) {
     return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
   }
 
-  const lineDisruptionsUrl = `/Line/${line}/Disruption`;
-  const modeDisruptionsUrl = `/Line/Mode/${line}/Disruption`;
+  const lineDisruptionsUrl = `/Line/${line.id}/Disruption`;
+  const modeDisruptionsUrl = `/Line/Mode/${line.id}/Disruption`;
   const requestOptions = {
     method: 'get',
     baseURL: 'https://api.tfl.gov.uk',
-    url: (line === 'tube') ? modeDisruptionsUrl : lineDisruptionsUrl,
+    url: (line.id === 'tube') ? modeDisruptionsUrl : lineDisruptionsUrl,
     params: {
       app_id: TFL_APP_ID,
       app_key: TFL_API_KEY
@@ -41,7 +41,7 @@ export default async function () {
       log(response);
 
       if (data.length === 0) {
-        const goodService = (line === 'tube')
+        const goodService = (line.id === 'tube')
           ? this.t('GOOD_SERVICE_ALL_LINES_MESSAGE')
           : responseToSpeak(this.t('GOOD_SERVICE_MESSAGE', fullLineName(line)));
 
@@ -52,7 +52,7 @@ export default async function () {
           goodService
         );
       } else {
-        const description = (line === 'tube')
+        const description = (line.id === 'tube')
           ? data.map(({ description }) => description).filter(d => d).join('<break strength="strong" />')
           : data[0].description;
 
