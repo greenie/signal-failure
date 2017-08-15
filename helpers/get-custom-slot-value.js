@@ -1,16 +1,13 @@
 export default function getCustomSlotValue(slot) {
-  const { resolutions, value } = slot;
+  const { resolutions } = slot;
+  const noMatchingValue = { name: null, id: null };
 
   if (resolutions) {
     const { resolutionsPerAuthority } = resolutions;
     const matching = resolutionsPerAuthority.find(r => r.status.code === 'ER_SUCCESS_MATCH');
 
-    if (matching) {
-      return matching.values.shift().map(({ value: { name, id } }) => ({ name, id }));
-    }
-
-    return null;
+    return matching ? matching.values[0].value : noMatchingValue;
   }
 
-  return { name: null, id: value };
+  return noMatchingValue;
 }
