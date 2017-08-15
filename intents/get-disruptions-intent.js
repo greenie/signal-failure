@@ -13,7 +13,7 @@ export default async function () {
   const lineSlot = this.event.request.intent.slots.Line;
   const line = getCustomSlotValue(lineSlot);
 
-  if (!line.id) {
+  if (!line) {
     return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
   }
 
@@ -26,12 +26,12 @@ export default async function () {
     params: {
       app_id: TFL_APP_ID,
       app_key: TFL_API_KEY
-    }
+    },
+    timeout: 3000
   };
 
   axios.interceptors.response.use(
-    ({ status, data, headers }) => ({ status, data, headers }),
-    error => error
+    ({ status, data, headers }) => ({ status, data, headers })
   );
 
   axios(requestOptions)
@@ -65,19 +65,16 @@ export default async function () {
       }
     })
     .catch(error => {
-      const { response, request, message } = error;
+      const { response } = error;
 
       if (response) {
         const { status, data, headers } = response;
+
         log({ status, data, headers });
 
-        if (response.status === 404) {
+        if (status === 404) {
           return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
         }
-      } else if (request) {
-        log(request);
-      } else {
-        log(message);
       }
 
       this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'));
