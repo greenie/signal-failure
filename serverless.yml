@@ -39,7 +39,7 @@ package:
 
 functions:
   handler:
-    timeout: 3
+    timeout: 6
     handler: index.handler
     name: signalFailure-${self:provider.stage}
     memorySize: 128
