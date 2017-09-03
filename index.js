@@ -11,11 +11,6 @@ export const handler = async (event, context, callback) => {
   alexa.appId = await getSecret('SKILL_ID');
   alexa.resources = translations;
 
-  // Fix for the Service Simulator setting applicationId to 'applicationId'
-  if (event.context && event.context.System.application.applicationId == 'applicationId') {
-    event.context.System.application.applicationId = event.session.application.applicationId;
-  }
-
   const handlers = {
     LaunchRequest,
     GetDisruptionsIntent,
