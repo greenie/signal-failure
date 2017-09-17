@@ -1,3 +1,5 @@
 export default function responseToSpeak(response) {
-  return response.replace(/DLR/, '<say-as interpret-as="spell-out">DLR</say-as>');
+  return response
+    .replace(/&/g, 'and')
+    .replace(/DLR/g, '<say-as interpret-as="spell-out">DLR</say-as>');
 }
