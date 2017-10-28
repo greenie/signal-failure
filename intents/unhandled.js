@@ -1,3 +1,3 @@
 export default function () {
-  this.emit(':ask', this.t('UNHANDLED_MESSAGE'));
+  this.emit(':ask', this.t('UNHANDLED_MESSAGE'))
 }
