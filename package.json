@@ -6,7 +6,9 @@
   "scripts": {
     "deploy": "serverless deploy",
     "deploy:function": "serverless deploy function -f",
-    "deploy:production": "serverless deploy --stage production"
+    "deploy:production": "serverless deploy --stage production",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -28,8 +30,8 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "eslint": "^4.9.0",
     "serverless": "^1.23.0",
-    "serverless-plugin-optimize": "^3.0.3-rc.1"
+    "serverless-plugin-optimize": "^3.0.3-rc.1",
+    "standard": "^10.0.3"
   }
 }
