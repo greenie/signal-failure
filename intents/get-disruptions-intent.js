@@ -20,6 +20,11 @@ export default async function () {
   const TFL_API_KEY = await getSecret('TFL_API_KEY')
   const line = getCustomSlotValue(slots.Line)
 
+  if (!line.id) {
+    log('Line name missing. Asking user to repeat themselves.')
+    return this.emit(':elicitSlot', 'Line', this.t('UNRECOGNISED_LINE_MESSAGE'))
+  }
+
   log(line)
 
   const lineDisruptionsUrl = `/Line/${line.id}/Disruption`

@@ -1,6 +1,6 @@
 export default function getCustomSlotValue (slot) {
   const { resolutions, value } = slot
-  const nonMatchingValue = { name: null, id: value }
+  const nonMatchingValue = { name: null, id: value || null }
 
   if (resolutions) {
     const { resolutionsPerAuthority } = resolutions
