@@ -25,8 +25,6 @@ export default async function () {
     return this.emit(':elicitSlot', 'Line', this.t('UNRECOGNISED_LINE_MESSAGE'))
   }
 
-  log(line)
-
   const lineDisruptionsUrl = `/Line/${line.id}/Disruption`
   const modeDisruptionsUrl = `/Line/Mode/${line.id}/Disruption`
   const requestOptions = {
