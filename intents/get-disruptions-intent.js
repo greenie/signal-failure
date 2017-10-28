@@ -6,16 +6,21 @@ import getSecret from '../helpers/secrets';
 import log from '../helpers/log';
 
 export default async function () {
-  log(this.event.request);
+  const { event: { request } } = this;
+  const { dialogState, intent: { slots } } = request;
+
+  log(request);
+
+  if (dialogState && dialogState !== 'COMPLETED') {
+    log('Line name missing. Asking user to repeat themselves.');
+    return this.emit(':delegate');
+  }
 
   const TFL_APP_ID = await getSecret('TFL_APP_ID');
   const TFL_API_KEY = await getSecret('TFL_API_KEY');
-  const lineSlot = this.event.request.intent.slots.Line;
-  const line = getCustomSlotValue(lineSlot);
+  const line = getCustomSlotValue(slots.Line);
 
-  if (!line) {
-    return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
-  }
+  log(line);
 
   const lineDisruptionsUrl = `/Line/${line.id}/Disruption`;
   const modeDisruptionsUrl = `/Line/Mode/${line.id}/Disruption`;
@@ -75,6 +80,8 @@ export default async function () {
         if (status === 404) {
           return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'));
         }
+      } else {
+        log(error);
       }
 
       this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'));
