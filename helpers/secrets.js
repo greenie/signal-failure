@@ -1,17 +1,15 @@
 import { KMS } from 'aws-sdk'
 
-export default function getSecret (secret) {
+const getSecret = async secret => {
   const kms = new KMS()
+  const params = { CiphertextBlob: Buffer.from(process.env[secret], 'base64') }
 
-  return new Promise((resolve, reject) => {
-    const params = { CiphertextBlob: Buffer.from(process.env[secret], 'base64') }
-
-    kms.decrypt(params, (err, data) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(data.Plaintext.toString('ascii'))
-      }
-    })
-  })
+  try {
+    const { Plaintext } = await kms.decrypt(params).promise()
+    return Plaintext.toString('ascii')
+  } catch (error) {
+    throw error
+  }
 }
+
+export default getSecret
