@@ -1,32 +1,8 @@
-import axios from 'axios'
 import getCustomSlotValue from '../helpers/get-custom-slot-value'
 import responseToSpeak from '../helpers/response-to-speak'
 import fullLineName from '../helpers/full-line-name'
-import getSecret from '../helpers/secrets'
+import getLineDisruptions from '../helpers/tfl-api/get-line-disruptions'
 import log from '../helpers/log'
-
-axios.interceptors.response.use(
-  ({ status, data, headers }) => ({ status, data, headers })
-)
-
-async function getDisruptions(line) {
-  const TFL_APP_ID = await getSecret('TFL_APP_ID')
-  const TFL_API_KEY = await getSecret('TFL_API_KEY')
-  const lineDisruptionsUrl = `/Line/${line.id}/Disruption`
-  const modeDisruptionsUrl = `/Line/Mode/${line.id}/Disruption`
-  const requestOptions = {
-    method: 'get',
-    baseURL: 'https://api.tfl.gov.uk',
-    url: (line.id === 'tube') ? modeDisruptionsUrl : lineDisruptionsUrl,
-    params: {
-      app_id: TFL_APP_ID,
-      app_key: TFL_API_KEY
-    },
-    timeout: 3000
-  }
-
-  return await axios(requestOptions)
-}
 
 export default async function () {
   const { event: { request } } = this
@@ -47,10 +23,8 @@ export default async function () {
   }
 
   try {
-    const response = await getDisruptions.call(this, line)
-    const { data } = response
-
-    log(response)
+    const disruptions = await getLineDisruptions(line.id)
+    const { data } = disruptions
 
     if (data.length === 0) {
       const goodService = (line.id === 'tube')
@@ -76,20 +50,10 @@ export default async function () {
       )
     }
   } catch (error) {
-    const { response } = error
+    log(error)
 
-    if (response) {
-      const { status, data, headers } = response
-
-      log({ status, data, headers })
-
-      if (status === 404) {
-        return this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'))
-      }
-    } else {
-      log(error)
-    }
-
-    this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'))
+    error.status && error.status === 404
+      ? this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'))
+      : this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'))
   }
 }
