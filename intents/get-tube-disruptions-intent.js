@@ -29,13 +29,15 @@ export default async function () {
       .map(({ description }) => description)
       .filter(d => d)
       .concat([this.t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')])
-      .join('<break strength="strong" />')
+
+    const descriptionToSpeak = responseToSpeak(description.map(d => `<p>${d}</p>`))
+    const descriptionForCard = description.join('\n\n')
 
     this.emit(
       ':tellWithCard',
-      responseToSpeak(description),
+      descriptionToSpeak,
       this.t('DELAYS_TITLE'),
-      description.replace(/<break[\s+\w*="\w*"]*\s*\/>/g, '\n\n')
+      descriptionForCard
     )
   }
 }

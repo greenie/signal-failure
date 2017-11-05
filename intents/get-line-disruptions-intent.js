@@ -34,9 +34,7 @@ export default async function () {
   }
 
   if (disruptions.length === 0) {
-    const goodService = (line.id === 'tube')
-      ? this.t('GOOD_SERVICE_ALL_LINES_MESSAGE')
-      : this.t('GOOD_SERVICE_MESSAGE', fullLineName(line))
+    const goodService = this.t('GOOD_SERVICE_MESSAGE', fullLineName(line))
 
     this.emit(
       ':tellWithCard',
@@ -45,15 +43,13 @@ export default async function () {
       goodService
     )
   } else {
-    const description = (line.id === 'tube')
-      ? disruptions.map(({ description }) => description).filter(d => d).join('<break strength="strong" />')
-      : disruptions[0].description
+    const description = disruptions[0].description
 
     this.emit(
       ':tellWithCard',
       responseToSpeak(description),
       this.t('DELAYS_TITLE'),
-      description.replace(/<break[\s+\w*="\w*"]*\s*\/>/g, '\n\n')
+      description
     )
   }
 }
