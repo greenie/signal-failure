@@ -1,7 +1,11 @@
 import responseToSpeak from '../helpers/response-to-speak'
+import log from '../helpers/log'
 
 export default {
   'AMAZON.HelpIntent': function () {
+    const { event: { request } } = this
+    log(request)
+
     const fullHelpMessage = this.t('HELP_MESSAGE', this.t('HELP_REPROMPT_MESSAGE'))
 
     this.emit(
@@ -12,10 +16,16 @@ export default {
   },
 
   'AMAZON.CancelIntent': function () {
+    const { event: { request } } = this
+    log(request)
+
     this.emit(':tell', this.t('STOP_MESSAGE'))
   },
 
   'AMAZON.StopIntent': function () {
+    const { event: { request } } = this
+    log(request)
+
     this.emit(':tell', this.t('STOP_MESSAGE'))
   }
 }
