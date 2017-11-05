@@ -1,3 +1,8 @@
+import log from '../helpers/log'
+
 export default function () {
-  this.emit(':ask', this.t('HELP_REPROMPT_MESSAGE'))
+  const { event: { request } } = this
+  log(request)
+
+  this.emit('GetTubeDisruptionsIntent')
 }
