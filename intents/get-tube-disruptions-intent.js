@@ -25,7 +25,11 @@ export default async function () {
       goodService
     )
   } else {
-    const description = disruptions.map(({ description }) => description).filter(d => d).join('<break strength="strong" />')
+    const description = disruptions
+      .map(({ description }) => description)
+      .filter(d => d)
+      .concat([this.t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')])
+      .join('<break strength="strong" />')
 
     this.emit(
       ':tellWithCard',

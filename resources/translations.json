@@ -1,11 +1,12 @@
 {
   "en": {
     "translation": {
-      "HELP_REPROMPT_MESSAGE": "Which line shall I check for delays?",
       "HELP_MESSAGE": "You can ask me to check for delays on London Underground, Overground, DLR, or TfL Rail lines. You can also say stop to quit. <break strength=\"strong\" /> %s",
+      "HELP_REPROMPT_MESSAGE": "Which line shall I check for delays?",
       "GOOD_SERVICE_TITLE": "Good Service",
       "GOOD_SERVICE_MESSAGE": "There is a good service on %s.",
       "GOOD_SERVICE_ALL_LINES_MESSAGE": "There is a good service on all London Underground lines.",
+      "GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE": "There is a good service on all other London Underground lines.",
       "DELAYS_TITLE": "Delays",
       "STOP_MESSAGE": "Goodbye!",
       "REQUEST_ERROR_TITLE": "Something went wrong",
