@@ -4,5 +4,5 @@ export default function () {
   const { event: { request } } = this
   log(request)
 
-  this.emit('GetTubeDisruptionsIntent')
+  this.emit('AMAZON.HelpIntent')
 }
