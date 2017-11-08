@@ -25,12 +25,14 @@ export default async function () {
       goodService
     )
   } else {
-    const description = disruptions
+    const uniqueDisruptions = new Set(disruptions
       .map(({ description }) => description)
-      .filter(d => d)
+      .filter(d => d))
+
+    const description = Array.from(uniqueDisruptions)
       .concat([this.t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')])
 
-    const descriptionToSpeak = responseToSpeak(description.map(d => `<p>${d}</p>`))
+    const descriptionToSpeak = responseToSpeak(description.map(d => `<p>${d}</p>`).join(''))
     const descriptionForCard = description.join('\n\n')
 
     this.emit(
