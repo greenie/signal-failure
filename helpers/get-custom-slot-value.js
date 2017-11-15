@@ -1,15 +1,14 @@
 const getCustomSlotValue = slot => {
-  const { resolutions, value } = slot
-  const nonMatchingValue = { name: null, id: value || null }
+  const { resolutions } = slot
+  const nonMatchingValue = { name: null, id: null }
 
-  if (resolutions) {
+  try {
     const { resolutionsPerAuthority } = resolutions
     const matching = resolutionsPerAuthority.find(r => r.status.code === 'ER_SUCCESS_MATCH')
-
-    return matching ? matching.values[0].value : null
+    return matching.values[0].value
+  } catch (e) {
+    return nonMatchingValue
   }
-
-  return nonMatchingValue
 }
 
 export default getCustomSlotValue
