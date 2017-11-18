@@ -21,11 +21,8 @@ export default async function () {
   try {
     disruptions = await getLineDisruptions(line.id)
   } catch (error) {
-    log(error)
-
-    return error.status && error.status === 404
-      ? this.emit(':ask', this.t('UNRECOGNISED_LINE_MESSAGE'))
-      : this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'))
+    log(error.message)
+    return this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'))
   }
 
   if (disruptions.length === 0) {
