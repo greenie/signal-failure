@@ -6,7 +6,7 @@ const getCustomSlotValue = slot => {
     const { resolutionsPerAuthority } = resolutions
     const matching = resolutionsPerAuthority.find(r => r.status.code === 'ER_SUCCESS_MATCH')
     return matching.values[0].value
-  } catch (e) {
+  } catch (error) {
     return nonMatchingValue
   }
 }
