@@ -6,22 +6,17 @@ import log from '../helpers/log'
 
 export default async function () {
   const { event: { request } } = this
-  const { dialogState, intent: { slots } } = request
-  let disruptions
+  const { intent: { slots } } = request
+  const line = getCustomSlotValue(slots.Line)
 
   log(request)
 
-  if (dialogState && dialogState !== 'COMPLETED') {
+  if (!line.id) {
     log('Line name missing. Asking user to repeat themselves.')
     return this.emit(':delegate')
   }
 
-  const line = getCustomSlotValue(slots.Line)
-
-  if (!line.id) {
-    log('Line name missing. Asking user to repeat themselves.')
-    return this.emit(':elicitSlot', 'Line', this.t('UNRECOGNISED_LINE_MESSAGE'))
-  }
+  let disruptions
 
   try {
     disruptions = await getLineDisruptions(line.id)
