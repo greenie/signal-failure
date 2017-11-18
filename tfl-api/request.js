@@ -1,11 +1,8 @@
 import axios from 'axios'
 import getSecret from '../helpers/secrets'
 import log from '../helpers/log'
-import formatRequestError from './format-request-error'
-
-axios.interceptors.response.use(
-  ({ status, data, headers }) => ({ status, data, headers })
-)
+import RequestError from '../helpers/axios/request-error'
+import ResponseError from '../helpers/axios/response-error'
 
 const request = async path => {
   const TFL_APP_ID = await getSecret('TFL_APP_ID')
@@ -22,11 +19,19 @@ const request = async path => {
   }
 
   try {
-    const response = await axios(requestOptions)
-    log(response)
-    return response.data
+    const { status, data, headers } = await axios(requestOptions)
+    log({ status, data, headers })
+    return data
   } catch (error) {
-    throw formatRequestError(error)
+    const { message, request, response } = error
+
+    if (response) {
+      throw new ResponseError(message, response)
+    } else if (request) {
+      throw new RequestError(message)
+    }
+
+    throw new Error(message)
   }
 }
 
