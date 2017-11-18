@@ -11,8 +11,8 @@ export default async function () {
   try {
     disruptions = await getModeDisruptions('tube')
   } catch (error) {
-    log(error)
-    this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'))
+    log(error.message)
+    return this.emit(':tell', this.t('REQUEST_ERROR_MESSAGE'))
   }
 
   if (disruptions.length === 0) {
