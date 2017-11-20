@@ -12,11 +12,13 @@ export default async function () {
   log(request)
 
   if (!line.id) {
-    log("Unable to match the user's request to a valid line.")
+    if (dialogState === 'COMPLETED') {
+      log('Dialog finished without matching to a slot value.')
+      return this.emit(':tell', this.t('UNHANDLED_MESSAGE'))
+    }
 
-    return dialogState === 'COMPLETED'
-      ? this.emit(':tell', this.t('UNHANDLED_MESSAGE'))
-      : this.emit(':delegate')
+    log("Unable to match the user's request to a valid line.")
+    this.emit(':delegate')
   }
 
   let disruptions
