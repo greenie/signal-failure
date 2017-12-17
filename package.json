@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/greenie/signal-failure#readme",
   "dependencies": {
-    "alexa-sdk": "^1.0.20",
-    "aws-sdk": "^2.151.0",
+    "alexa-sdk": "^1.0.24",
+    "aws-sdk": "^2.171.0",
     "axios": "^0.16.2"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "serverless": "^1.24.1",
-    "serverless-plugin-optimize": "^3.0.3-rc.1",
+    "serverless-plugin-optimize": "^3.0.4-rc.1",
     "standard": "^10.0.3"
   }
 }
