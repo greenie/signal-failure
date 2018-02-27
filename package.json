@@ -22,7 +22,6 @@
   "homepage": "https://github.com/greenie/signal-failure#readme",
   "dependencies": {
     "alexa-sdk": "^1.0.25",
-    "aws-sdk": "^2.188.0",
     "axios": "^0.16.2"
   },
   "devDependencies": {

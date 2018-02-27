@@ -25,9 +25,11 @@ export default async function () {
       goodService
     )
   } else {
-    const uniqueDisruptions = new Set(disruptions
-      .map(({ description }) => description)
-      .filter(d => d))
+    const uniqueDisruptions = new Set(
+      disruptions
+        .map(({ description }) => description)
+        .filter(d => d)
+    )
 
     const description = Array.from(uniqueDisruptions)
       .concat([this.t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')])
