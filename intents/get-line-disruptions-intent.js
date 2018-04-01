@@ -24,7 +24,7 @@ export default async function () {
   if (line.id === 'elizabeth') {
     return this.emit(
       ':tellWithCard',
-      this.t('ELIZABETH_LINE_INFO'),
+      responseToSpeak(this.t('ELIZABETH_LINE_INFO')),
       this.t('ELIZABETH_LINE_INFO_TITLE'),
       this.t('ELIZABETH_LINE_INFO')
     )
