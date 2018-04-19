@@ -4,7 +4,7 @@ import responseToSpeak from '../helpers/response-to-speak'
 import fullLineName from '../helpers/full-line-name'
 import log from '../helpers/log'
 
-export default async function () {
+const GetLineDisruptionsIntent = async function () {
   const { event: { request } } = this
   const { dialogState, intent: { slots } } = request
   const line = getCustomSlotValue(slots.Line)
@@ -18,7 +18,7 @@ export default async function () {
     }
 
     log("Unable to match the user's request to a valid line.")
-    this.emit(':delegate')
+    return this.emit(':delegate')
   }
 
   if (line.id === 'elizabeth') {
@@ -42,7 +42,7 @@ export default async function () {
   if (disruptions.length === 0) {
     const goodService = this.t('GOOD_SERVICE_MESSAGE', fullLineName(line))
 
-    this.emit(
+    return this.emit(
       ':tellWithCard',
       responseToSpeak(goodService),
       this.t('GOOD_SERVICE_TITLE'),
@@ -51,7 +51,7 @@ export default async function () {
   } else {
     const description = disruptions[0].description
 
-    this.emit(
+    return this.emit(
       ':tellWithCard',
       responseToSpeak(description),
       this.t('DELAYS_TITLE'),
@@ -59,3 +59,5 @@ export default async function () {
     )
   }
 }
+
+export default GetLineDisruptionsIntent

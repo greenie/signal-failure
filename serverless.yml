@@ -3,21 +3,12 @@ service:
 
 custom:
   default_stage: dev
-  optimize:
-    presets:
-      - - env
-        - targets:
-            node: '6.10'
-    plugins:
-      - transform-runtime
-      - transform-object-rest-spread
-    prefix: dist
-
+  
 provider:
   name: aws
   region: eu-west-1
   stage: ${opt:stage, self:custom.default_stage}
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   memorySize: 128
   environment:
     SKILL_ID: ${ssm:/signalFailure/SKILL_ID~true}
@@ -26,12 +17,13 @@ provider:
 
 package:
   exclude:
+    - .babelrc
     - .git/**
     - .eslintrc.json
     - .gitignore
     - LICENCE
     - README.md
-  excludeDevDependencies: true
+    - webpack.config.js
 
 functions:
   handler:
@@ -43,4 +35,4 @@ functions:
       - alexaSkill
 
 plugins:
-  - serverless-plugin-optimize
+  - serverless-webpack

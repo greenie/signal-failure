@@ -4,5 +4,5 @@ export default function () {
   const { event: { request } } = this
   log(request)
 
-  this.emit('AMAZON.HelpIntent')
+  return this.emit('AMAZON.HelpIntent')
 }

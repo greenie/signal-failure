@@ -8,7 +8,7 @@ export default {
 
     const fullHelpMessage = this.t('HELP_MESSAGE', this.t('HELP_REPROMPT_MESSAGE'))
 
-    this.emit(
+    return this.emit(
       ':ask',
       responseToSpeak(fullHelpMessage),
       this.t('HELP_REPROMPT_MESSAGE')
@@ -19,13 +19,13 @@ export default {
     const { event: { request } } = this
     log(request)
 
-    this.emit(':tell', this.t('STOP_MESSAGE'))
+    return this.emit(':tell', this.t('STOP_MESSAGE'))
   },
 
   'AMAZON.StopIntent': function () {
     const { event: { request } } = this
     log(request)
 
-    this.emit(':tell', this.t('STOP_MESSAGE'))
+    return this.emit(':tell', this.t('STOP_MESSAGE'))
   }
 }
