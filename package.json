@@ -21,11 +21,14 @@
   },
   "homepage": "https://github.com/greenie/signal-failure#readme",
   "dependencies": {
-    "alexa-sdk": "^1.0.25",
-    "axios": "^0.16.2"
+    "ask-sdk-core": "^2.0.1",
+    "ask-sdk-model": "^1.0.1",
+    "axios": "^0.16.2",
+    "i18next": "^11.2.3",
+    "i18next-sprintf-postprocessor": "^0.2.2"
   },
   "devDependencies": {
-    "ask-cli": "^1.1.6",
+    "ask-cli": "^1.2.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
@@ -34,6 +37,6 @@
     "serverless": "^1.26.1",
     "serverless-webpack": "^5.1.1",
     "standard": "^10.0.3",
-    "webpack": "^4.5.0"
+    "webpack": "^4.6.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "en": {
+  "en-GB": {
     "translation": {
       "HELP_MESSAGE": "You can ask me to check for delays on London Underground, Overground, DLR, or TfL Rail lines. You can also say stop to quit. <break strength=\"strong\" /> %s",
       "HELP_REPROMPT_MESSAGE": "What would you like me to do?",

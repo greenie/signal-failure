@@ -1,24 +1,21 @@
-import Alexa from 'alexa-sdk'
-import translations from './resources/translations'
-import LaunchRequest from './intents/launch-request'
+import * as Alexa from 'ask-sdk-core'
+import HelpIntent from './intents/help-intent'
 import GetLineDisruptionsIntent from './intents/get-line-disruptions-intent'
 import GetTubeDisruptionsIntent from './intents/get-tube-disruptions-intent'
-import AmazonDefaultIntents from './intents/amazon-default-intents'
+import ExitIntent from './intents/exit-intent'
+import LocalisationInterceptor from './interceptors/localisation-interceptor'
 import Unhandled from './intents/unhandled'
 
-export const handler = async (event, context, callback) => {
-  let alexa = Alexa.handler(event, context, callback)
-  alexa.appId = process.env.SKILL_ID
-  alexa.resources = translations
-
-  const handlers = {
-    LaunchRequest,
+const handler = Alexa.SkillBuilders.custom()
+  .withSkillId(process.env.SKILL_ID)
+  .addRequestHandlers(
+    HelpIntent,
     GetLineDisruptionsIntent,
     GetTubeDisruptionsIntent,
-    ...AmazonDefaultIntents,
-    Unhandled
-  }
+    ExitIntent
+  )
+  .addRequestInterceptors(LocalisationInterceptor)
+  .addErrorHandlers(Unhandled)
+  .lambda()
 
-  alexa.registerHandlers(handlers)
-  alexa.execute()
-}
+export { handler }

@@ -1,8 +1,18 @@
 import log from '../helpers/log'
 
-export default function () {
-  const { event: { request } } = this
-  log(request)
+const Unhandled = {
+  canHandle () {
+    return true
+  },
+  handle (handlerInput, error) {
+    log(error)
 
-  return this.emit(':tell', this.t('UNHANDLED_MESSAGE'))
+    const requestAttributes = handlerInput.attributesManager.getRequestAttributes()
+
+    return handlerInput.responseBuilder
+      .speak(requestAttributes.t('UNHANDLED_MESSAGE'))
+      .getResponse()
+  }
 }
+
+export default Unhandled
