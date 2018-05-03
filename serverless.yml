@@ -3,7 +3,7 @@ service:
 
 custom:
   default_stage: dev
-  
+
 provider:
   name: aws
   region: eu-west-1
@@ -19,9 +19,9 @@ package:
   exclude:
     - .babelrc
     - .git/**
-    - .eslintrc.json
     - .gitignore
     - LICENCE
+    - models/**
     - README.md
     - webpack.config.js
 

@@ -1,0 +1,311 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "signal failure",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "GetLineDisruptionsIntent",
+          "slots": [
+            {
+              "name": "Line",
+              "type": "LineName",
+              "samples": [
+                "{Line}",
+                "{Line} line",
+                "the {Line}",
+                "the {Line} line"
+              ]
+            },
+            {
+              "name": "Fault",
+              "type": "FaultName"
+            }
+          ],
+          "samples": [
+            "are there {Fault} on {Line}",
+            "are there {Fault} on {Line} line",
+            "are there {Fault} on the {Line}",
+            "are there {Fault} on the {Line} line",
+            "is {Line} {Fault}",
+            "is {Line} line {Fault}",
+            "is the {Line} {Fault}",
+            "is the {Line} line {Fault}",
+            "if {Line} is {Fault}",
+            "if {Line} line is {Fault}",
+            "if the {Line} is {Fault}",
+            "if the {Line} line is {Fault}",
+            "if there are {Fault} on {Line}",
+            "if there are {Fault} on the {Line}",
+            "does {Line} have {Fault}",
+            "does {Line} line have {Fault}",
+            "does the {Line} have {Fault}",
+            "does the {Line} line have {Fault}",
+            "check {Line} for {Fault}",
+            "check {Line} line for {Fault}",
+            "check the {Line} for {Fault}",
+            "check the {Line} line for {Fault}",
+            "check for {Fault} on {Line}",
+            "check for {Fault} on {Line} line",
+            "check for {Fault} on the {Line}",
+            "check for {Fault} on the {Line} line",
+            "to check {Line} for {Fault}",
+            "to check {Line} line for {Fault}",
+            "to check the {Line} for {Fault}",
+            "to check the {Line} line for {Fault}",
+            "to check for {Fault} on {Line}",
+            "to check for {Fault} on {Line} line",
+            "to check for {Fault} on the {Line}",
+            "to check for {Fault} on the {Line} line",
+            "for the status of {Line}",
+            "for the status of {Line} line",
+            "for the status of the {Line}",
+            "for the status of the {Line} line",
+            "check the status of {Line}",
+            "check the status of {Line} line",
+            "check the status of the {Line}",
+            "check the status of the {Line} line"
+          ]
+        },
+        {
+          "name": "GetTubeDisruptionsIntent",
+          "slots": [
+            {
+              "name": "Mode",
+              "type": "ModeName"
+            },
+            {
+              "name": "Fault",
+              "type": "FaultName"
+            }
+          ],
+          "samples": [
+            "are there {Fault} on the {Mode}",
+            "is the {Mode} {Fault}",
+            "if the {Mode} is {Fault}",
+            "if there are {Fault} on the {Mode}",
+            "does the {Mode} have {Fault}",
+            "check the {Mode} for {Fault}",
+            "check for {Fault} on the {Mode}",
+            "to check the {Mode} for {Fault}",
+            "to check for {Fault} on the {Mode}",
+            "for the status of the {Mode}",
+            "check the status of the {Mode}"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "id": "delay",
+              "name": {
+                "value": "delay",
+                "synonyms": [
+                  "delays",
+                  "delayed"
+                ]
+              }
+            },
+            {
+              "id": "disruption",
+              "name": {
+                "value": "disruption",
+                "synonyms": [
+                  "disruptions",
+                  "disrupted"
+                ]
+              }
+            },
+            {
+              "id": "fault",
+              "name": {
+                "value": "fault",
+                "synonyms": [
+                  "faults",
+                  "faulty"
+                ]
+              }
+            }
+          ],
+          "name": "FaultName"
+        },
+        {
+          "values": [
+            {
+              "id": "elizabeth",
+              "name": {
+                "value": "Elizabeth",
+                "synonyms": [
+                  "crossrail"
+                ]
+              }
+            },
+            {
+              "id": "northern",
+              "name": {
+                "value": "Northern"
+              }
+            },
+            {
+              "id": "jubilee",
+              "name": {
+                "value": "Jubilee"
+              }
+            },
+            {
+              "id": "circle",
+              "name": {
+                "value": "Circle"
+              }
+            },
+            {
+              "id": "dlr",
+              "name": {
+                "value": "DLR",
+                "synonyms": [
+                  "docklands light railway",
+                  "dealer"
+                ]
+              }
+            },
+            {
+              "id": "hammersmith-city",
+              "name": {
+                "value": "Hammersmith and City",
+                "synonyms": [
+                  "hammersmith city",
+                  "hammersmith cityline"
+                ]
+              }
+            },
+            {
+              "id": "london-overground",
+              "name": {
+                "value": "Overground",
+                "synonyms": [
+                  "london overground"
+                ]
+              }
+            },
+            {
+              "id": "waterloo-city",
+              "name": {
+                "value": "Waterloo and City",
+                "synonyms": [
+                  "waterloo city",
+                  "waterloo cityline"
+                ]
+              }
+            },
+            {
+              "id": "bakerloo",
+              "name": {
+                "value": "Bakerloo"
+              }
+            },
+            {
+              "id": "central",
+              "name": {
+                "value": "Central"
+              }
+            },
+            {
+              "id": "district",
+              "name": {
+                "value": "District"
+              }
+            },
+            {
+              "id": "metropolitan",
+              "name": {
+                "value": "Metropolitan"
+              }
+            },
+            {
+              "id": "piccadilly",
+              "name": {
+                "value": "Piccadilly"
+              }
+            },
+            {
+              "id": "victoria",
+              "name": {
+                "value": "Victoria"
+              }
+            },
+            {
+              "id": "tfl-rail",
+              "name": {
+                "value": "TfL Rail"
+              }
+            }
+          ],
+          "name": "LineName"
+        },
+        {
+          "values": [
+            {
+              "id": "tube",
+              "name": {
+                "value": "Underground",
+                "synonyms": [
+                  "tube",
+                  "london underground"
+                ]
+              }
+            }
+          ],
+          "name": "ModeName"
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "GetLineDisruptionsIntent",
+          "confirmationRequired": false,
+          "slots": [
+            {
+              "name": "Line",
+              "type": "LineName",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Intent-GetLineDisruptionsIntent.IntentSlot-Line"
+              }
+            },
+            {
+              "name": "Fault",
+              "type": "FaultName",
+              "elicitationRequired": false,
+              "confirmationRequired": false
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Intent-GetLineDisruptionsIntent.IntentSlot-Line",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Which line would you like me to check?"
+          }
+        ]
+      }
+    ]
+  }
+}
