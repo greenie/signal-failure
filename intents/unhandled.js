@@ -5,12 +5,13 @@ const Unhandled = {
     return true
   },
   handle (handlerInput, error) {
+    log('In Unhandled')
     log(error)
 
-    const requestAttributes = handlerInput.attributesManager.getRequestAttributes()
+    const { t } = handlerInput.attributesManager.getRequestAttributes()
 
     return handlerInput.responseBuilder
-      .speak(requestAttributes.t('UNHANDLED_MESSAGE'))
+      .speak(t('UNHANDLED_MESSAGE'))
       .getResponse()
   }
 }

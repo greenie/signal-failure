@@ -1,15 +1,21 @@
+import log from '../helpers/log'
+
 const ExitIntent = {
   canHandle (handlerInput) {
     const { request } = handlerInput.requestEnvelope
-    return request.type === 'IntentRequest' &&
-      (request.intent.name === 'AMAZON.StopIntent' ||
-       request.intent.name === 'AMAZON.CancelIntent')
+
+    return request.type === 'IntentRequest' && (
+      request.intent.name === 'AMAZON.StopIntent' ||
+      request.intent.name === 'AMAZON.CancelIntent'
+    )
   },
   handle (handlerInput) {
-    const requestAttributes = handlerInput.attributesManager.getRequestAttributes()
+    log('In ExitIntent')
+
+    const { t } = handlerInput.attributesManager.getRequestAttributes()
 
     return handlerInput.responseBuilder
-      .speak(requestAttributes.t('STOP_MESSAGE'))
+      .speak(t('STOP_MESSAGE'))
       .getResponse()
   }
 }

@@ -11,11 +11,9 @@ const LocalisationInterceptor = {
       returnObjects: true
     })
 
-    const attributes = handlerInput.attributesManager.getRequestAttributes()
-
-    attributes.t = function (...args) {
-      return client.t(...args)
-    }
+    handlerInput.attributesManager.setRequestAttributes({
+      t: (...args) => client.t(...args)
+    })
   }
 }
 

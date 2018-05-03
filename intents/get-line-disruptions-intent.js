@@ -1,37 +1,60 @@
 import getCustomSlotValue from '../helpers/get-custom-slot-value'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
-import responseToSpeak from '../helpers/response-to-speak'
 import fullLineName from '../helpers/full-line-name'
 import log from '../helpers/log'
+
+const InProgressGetLineDisruptionsIntent = {
+  canHandle (handlerInput) {
+    const { request } = handlerInput.requestEnvelope
+
+    return request.type === 'IntentRequest' &&
+      request.intent.name === 'GetLineDisruptionsIntent' &&
+      request.dialogState !== 'COMPLETED'
+  },
+  handle (handlerInput) {
+    log('In InProgressGetLineDisruptionsIntent')
+
+    const { t } = handlerInput.attributesManager.getRequestAttributes()
+    const { intent } = handlerInput.requestEnvelope.request
+    const { slots: { Line } } = intent
+    const line = getCustomSlotValue(Line)
+
+    if (!line.id) {
+      return handlerInput.responseBuilder
+        .speak(t('UNRECOGNISED_LINE_MESSAGE'))
+        .reprompt(t('UNRECOGNISED_LINE_MESSAGE'))
+        .addElicitSlotDirective(Line.name)
+        .getResponse()
+    }
+
+    handlerInput.attributesManager.setSessionAttributes({ line })
+
+    return handlerInput.responseBuilder
+      .addDelegateDirective(intent)
+      .getResponse()
+  }
+}
 
 const GetLineDisruptionsIntent = {
   canHandle (handlerInput) {
     const { request } = handlerInput.requestEnvelope
+
     return request.type === 'IntentRequest' &&
-      request.intent.name === 'GetLineDisruptionsIntent'
+      request.intent.name === 'GetLineDisruptionsIntent' &&
+      request.dialogState === 'COMPLETED'
   },
   async handle (handlerInput) {
-    const { dialogState, intent: { slots } } = handlerInput.requestEnvelope.request
-    const requestAttributes = handlerInput.attributesManager.getRequestAttributes()
-    const line = getCustomSlotValue(slots.Line)
+    log('In GetLineDisruptionsIntent')
 
-    if (!line.id) {
-      if (dialogState === 'COMPLETED') {
-        log('Dialog finished without matching to a slot value.')
-        return handlerInput.responseBuilder
-          .speak(requestAttributes.t('UNHANDLED_MESSAGE'))
-          .getResponse()
-      }
-
-      log("Unable to match the user's request to a valid line.")
-      return this.emit(':delegate')
-    }
+    const { t } = handlerInput.attributesManager.getRequestAttributes()
+    const { line } = handlerInput.attributesManager.getSessionAttributes()
 
     if (line.id === 'elizabeth') {
       return handlerInput.responseBuilder
-        .speak(responseToSpeak(requestAttributes.t('ELIZABETH_LINE_INFO')))
+        .speak(t('ELIZABETH_LINE_INFO'))
         .withSimpleCard(
-          requestAttributes.t('ELIZABETH_LINE_INFO_TITLE'), requestAttributes.t('ELIZABETH_LINE_INFO')
+          t('ELIZABETH_LINE_INFO_TITLE'),
+          t('ELIZABETH_LINE_INFO')
         )
         .getResponse()
     }
@@ -44,32 +67,32 @@ const GetLineDisruptionsIntent = {
       log(error.message)
 
       return handlerInput.responseBuilder
-        .speak(requestAttributes.t('REQUEST_ERROR_MESSAGE'))
+        .speak(t('REQUEST_ERROR_MESSAGE'))
         .getResponse()
     }
+
+    let title
+    let description
 
     if (disruptions.length === 0) {
-      const goodService = requestAttributes.t('GOOD_SERVICE_MESSAGE', fullLineName(line))
-
-      return handlerInput.responseBuilder
-        .speak(responseToSpeak(goodService))
-        .withSimpleCard(
-          requestAttributes.t('GOOD_SERVICE_TITLE'),
-          goodService
-        )
-        .getResponse()
+      title = t('GOOD_SERVICE_TITLE')
+      description = t('GOOD_SERVICE_MESSAGE', fullLineName(line))
     } else {
-      const description = disruptions[0].description
-
-      return handlerInput.responseBuilder
-        .speak(responseToSpeak(description))
-        .withSimpleCard(
-          requestAttributes.t('DELAYS_TITLE'),
-          description
-        )
-        .getResponse()
+      title = t('DELAYS_TITLE')
+      description = disruptions[0].description
     }
+
+    return handlerInput.responseBuilder
+      .speak(description)
+      .withSimpleCard(
+        title,
+        description
+      )
+      .getResponse()
   }
 }
 
-export default GetLineDisruptionsIntent
+export {
+  InProgressGetLineDisruptionsIntent,
+  GetLineDisruptionsIntent
+}

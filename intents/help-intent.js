@@ -1,17 +1,22 @@
+import log from '../helpers/log'
+
 const HelpIntent = {
   canHandle (handlerInput) {
     const { request } = handlerInput.requestEnvelope
-    return request.type === 'LaunchRequest' ||
-      (request.type === 'IntentRequest' &&
-       request.intent.name === 'AMAZON.HelpIntent')
+
+    return request.type === 'LaunchRequest' || (
+      request.type === 'IntentRequest' &&
+      request.intent.name === 'AMAZON.HelpIntent'
+    )
   },
   handle (handlerInput) {
-    const requestAttributes = handlerInput.attributesManager.getRequestAttributes()
-    const fullHelpMessage = requestAttributes.t('HELP_MESSAGE', requestAttributes.t('HELP_REPROMPT_MESSAGE'))
+    log('In HelpIntent')
+
+    const { t } = handlerInput.attributesManager.getRequestAttributes()
 
     return handlerInput.responseBuilder
-      .speak(fullHelpMessage)
-      .reprompt(requestAttributes.t('HELP_REPROMPT_MESSAGE'))
+      .speak(t('HELP_MESSAGE', t('HELP_REPROMPT_MESSAGE')))
+      .reprompt(t('HELP_REPROMPT_MESSAGE'))
       .getResponse()
   }
 }
