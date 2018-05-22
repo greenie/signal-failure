@@ -32,7 +32,7 @@ functions:
     name: signalFailure-${self:provider.stage}
     memorySize: 128
     events:
-      - alexaSkill
+      - alexaSkill: ${ssm:/signalFailure/SKILL_ID~true}
 
 plugins:
   - serverless-webpack
