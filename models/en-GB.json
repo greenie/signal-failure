@@ -107,6 +107,7 @@
       ],
       "types": [
         {
+          "name": "FaultName",
           "values": [
             {
               "id": "delay",
@@ -138,10 +139,10 @@
                 ]
               }
             }
-          ],
-          "name": "FaultName"
+          ]
         },
         {
+          "name": "LineName",
           "values": [
             {
               "id": "elizabeth",
@@ -251,10 +252,10 @@
                 "value": "TfL Rail"
               }
             }
-          ],
-          "name": "LineName"
+          ]
         },
         {
+          "name": "ModeName",
           "values": [
             {
               "id": "tube",
@@ -266,8 +267,7 @@
                 ]
               }
             }
-          ],
-          "name": "ModeName"
+          ]
         }
       ]
     },
@@ -276,12 +276,13 @@
         {
           "name": "GetLineDisruptionsIntent",
           "confirmationRequired": false,
+          "prompts": {},
           "slots": [
             {
               "name": "Line",
               "type": "LineName",
-              "elicitationRequired": true,
               "confirmationRequired": false,
+              "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.Intent-GetLineDisruptionsIntent.IntentSlot-Line"
               }
@@ -289,8 +290,9 @@
             {
               "name": "Fault",
               "type": "FaultName",
+              "confirmationRequired": false,
               "elicitationRequired": false,
-              "confirmationRequired": false
+              "prompts": {}
             }
           ]
         }

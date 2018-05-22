@@ -27,8 +27,6 @@ const InProgressGetLineDisruptionsIntent = {
         .getResponse()
     }
 
-    handlerInput.attributesManager.setSessionAttributes({ line })
-
     return handlerInput.responseBuilder
       .addDelegateDirective(intent)
       .getResponse()
@@ -47,7 +45,8 @@ const GetLineDisruptionsIntent = {
     log('In GetLineDisruptionsIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
-    const { line } = handlerInput.attributesManager.getSessionAttributes()
+    const { slots: { Line } } = handlerInput.requestEnvelope.request.intent
+    const line = getCustomSlotValue(Line)
 
     if (line.id === 'elizabeth') {
       return handlerInput.responseBuilder
