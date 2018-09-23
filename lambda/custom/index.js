@@ -4,6 +4,10 @@ import {
   InProgressGetLineDisruptionsIntent,
   GetLineDisruptionsIntent
 } from './intents/get-line-disruptions-intent'
+import {
+  InProgressGetMultiLineDisruptionsIntent,
+  GetMultiLineDisruptionsIntent
+} from './intents/get-multi-line-disruptions-intent'
 import GetTubeDisruptionsIntent from './intents/get-tube-disruptions-intent'
 import ExitIntent from './intents/exit-intent'
 import LocalisationInterceptor from './interceptors/localisation-interceptor'
@@ -17,6 +21,8 @@ const handler = Alexa.SkillBuilders.custom()
     HelpIntent,
     InProgressGetLineDisruptionsIntent,
     GetLineDisruptionsIntent,
+    InProgressGetMultiLineDisruptionsIntent,
+    GetMultiLineDisruptionsIntent,
     GetTubeDisruptionsIntent,
     ExitIntent
   )

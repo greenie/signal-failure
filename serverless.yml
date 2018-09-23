@@ -15,20 +15,10 @@ provider:
     TFL_APP_KEY: ${ssm:/signalFailure/TFL_APP_KEY~true}
     TFL_APP_ID: ${ssm:/signalFailure/TFL_APP_ID~true}
 
-package:
-  exclude:
-    - .babelrc
-    - .git/**
-    - .gitignore
-    - LICENCE
-    - models/**
-    - README.md
-    - webpack.config.js
-
 functions:
   handler:
     timeout: 6
-    handler: index.handler
+    handler: lambda/custom/index.handler
     name: signalFailure-${self:provider.stage}
     memorySize: 128
     events:
