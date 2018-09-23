@@ -2,7 +2,7 @@ service:
   name: signalFailure
 
 custom:
-  default_stage: dev
+  default_stage: development
 
 provider:
   name: aws
