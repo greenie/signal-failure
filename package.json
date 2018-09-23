@@ -2,13 +2,13 @@
   "name": "signal-failure",
   "version": "1.0.0",
   "description": "An Alexa skill for checking the status of London Underground, Overground, DLR, and TfL Rail lines.",
-  "main": "index.js",
+  "main": "lambda/custom/index.js",
   "scripts": {
     "deploy": "serverless deploy",
     "deploy:function": "serverless deploy function -f",
     "deploy:production": "serverless deploy --stage production",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint": "eslint lambda/custom",
+    "lint:fix": "eslint --fix lambda/custom"
   },
   "repository": {
     "type": "git",
