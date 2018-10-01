@@ -1,31 +1,40 @@
-import getCustomSlotValue from '../helpers/get-custom-slot-value'
+import {
+  allPass,
+  complement,
+  compose,
+  head,
+  prop,
+  path,
+  always,
+  cond,
+  isEmpty,
+  T
+} from 'ramda'
+import getRequest from '../helpers/get-request'
+import isIntentRequest from '../helpers/is-intent-request'
+import intentRequestNameIs from '../helpers/intent-request-name-is'
+import requestDialogIs from '../helpers/request-dialog-is'
+import getIntent from '../helpers/get-intent'
+import getSlotValues from '../helpers/get-slot-values'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
 import fullLineName from '../helpers/full-line-name'
 import log from '../helpers/log'
 
 const InProgressGetLineDisruptionsIntent = {
   canHandle (handlerInput) {
-    const { request } = handlerInput.requestEnvelope
-
-    return request.type === 'IntentRequest' &&
-      request.intent.name === 'GetLineDisruptionsIntent' &&
-      request.dialogState !== 'COMPLETED'
+    return compose(
+      allPass([
+        isIntentRequest,
+        intentRequestNameIs('GetLineDisruptionsIntent'),
+        complement(requestDialogIs('COMPLETED'))
+      ]),
+      getRequest
+    )(handlerInput)
   },
   handle (handlerInput) {
     log('In InProgressGetLineDisruptionsIntent')
 
-    const { t } = handlerInput.attributesManager.getRequestAttributes()
-    const { intent } = handlerInput.requestEnvelope.request
-    const { slots: { Line } } = intent
-    const line = getCustomSlotValue(Line)
-
-    if (!line.id) {
-      return handlerInput.responseBuilder
-        .speak(t('UNRECOGNISED_LINE_MESSAGE'))
-        .reprompt(t('UNRECOGNISED_LINE_MESSAGE'))
-        .addElicitSlotDirective(Line.name)
-        .getResponse()
-    }
+    const intent = getIntent(handlerInput)
 
     return handlerInput.responseBuilder
       .addDelegateDirective(intent)
@@ -35,18 +44,27 @@ const InProgressGetLineDisruptionsIntent = {
 
 const GetLineDisruptionsIntent = {
   canHandle (handlerInput) {
-    const { request } = handlerInput.requestEnvelope
-
-    return request.type === 'IntentRequest' &&
-      request.intent.name === 'GetLineDisruptionsIntent' &&
-      request.dialogState === 'COMPLETED'
+    return compose(
+      allPass([
+        isIntentRequest,
+        intentRequestNameIs('GetLineDisruptionsIntent'),
+        requestDialogIs('COMPLETED')
+      ]),
+      getRequest
+    )(handlerInput)
   },
   async handle (handlerInput) {
     log('In GetLineDisruptionsIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
-    const { slots: { Line } } = handlerInput.requestEnvelope.request.intent
-    const line = getCustomSlotValue(Line)
+    const line = compose(
+      prop('value'),
+      head,
+      getSlotValues,
+      path(['slots', 'Line']),
+      getIntent,
+      getRequest
+    )(handlerInput)
 
     if (line.id === 'elizabeth') {
       return handlerInput.responseBuilder
@@ -70,16 +88,22 @@ const GetLineDisruptionsIntent = {
         .getResponse()
     }
 
-    let title
-    let description
-
-    if (disruptions.length === 0) {
-      title = t('GOOD_SERVICE_TITLE')
-      description = t('GOOD_SERVICE_MESSAGE', fullLineName(line))
-    } else {
-      title = t('DELAYS_TITLE')
-      description = disruptions[0].description
-    }
+    const [title, description] = cond([
+      [
+        isEmpty,
+        always([
+          t('GOOD_SERVICE_TITLE'),
+          t('GOOD_SERVICE_MESSAGE', fullLineName(line))
+        ])
+      ],
+      [
+        T,
+        disruptions => [
+          t('DELAYS_TITLE'),
+          disruptions[0].description
+        ]
+      ]
+    ])(disruptions)
 
     return handlerInput.responseBuilder
       .speak(description)
