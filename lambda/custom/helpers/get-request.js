@@ -1,5 +1,5 @@
 import { path } from 'ramda'
 
-const getRequest = handlerInput => path(['requestEnvelope', 'request'], handlerInput)
+const getRequest = path(['requestEnvelope', 'request'])
 
 export default getRequest

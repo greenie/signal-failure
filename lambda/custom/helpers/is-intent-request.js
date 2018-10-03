@@ -1,5 +1,5 @@
 import { propEq } from 'ramda'
 
-const isIntentRequest = request => propEq('type', 'IntentRequest')
+const isIntentRequest = propEq('type', 'IntentRequest')
 
 export default isIntentRequest

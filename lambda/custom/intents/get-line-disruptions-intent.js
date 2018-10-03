@@ -12,7 +12,7 @@ import {
 } from 'ramda'
 import getRequest from '../helpers/get-request'
 import isIntentRequest from '../helpers/is-intent-request'
-import intentRequestNameIs from '../helpers/intent-request-name-is'
+import intentNameIs from '../helpers/intent-name-is'
 import requestDialogIs from '../helpers/request-dialog-is'
 import getIntent from '../helpers/get-intent'
 import getSlotValues from '../helpers/get-slot-values'
@@ -25,7 +25,7 @@ const InProgressGetLineDisruptionsIntent = {
     return compose(
       allPass([
         isIntentRequest,
-        intentRequestNameIs('GetLineDisruptionsIntent'),
+        intentNameIs('GetLineDisruptionsIntent'),
         complement(requestDialogIs('COMPLETED'))
       ]),
       getRequest
@@ -47,7 +47,7 @@ const GetLineDisruptionsIntent = {
     return compose(
       allPass([
         isIntentRequest,
-        intentRequestNameIs('GetLineDisruptionsIntent'),
+        intentNameIs('GetLineDisruptionsIntent'),
         requestDialogIs('COMPLETED')
       ]),
       getRequest
@@ -62,8 +62,7 @@ const GetLineDisruptionsIntent = {
       head,
       getSlotValues,
       path(['slots', 'Line']),
-      getIntent,
-      getRequest
+      getIntent
     )(handlerInput)
 
     if (line.id === 'elizabeth') {
