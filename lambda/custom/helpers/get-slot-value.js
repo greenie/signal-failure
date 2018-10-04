@@ -11,16 +11,20 @@ import {
 
 const getResolutions = path(['resolutions', 'resolutionsPerAuthority'])
 
-const getSlotValues = cond([
+const getSlotValue = cond([
   [
     getResolutions,
     compose(
       cond([
         [
           pathEq(['status', 'code'], 'ER_SUCCESS_MATCH'),
-          prop('values')
+          compose(
+            prop('value'),
+            head,
+            prop('values')
+          )
         ],
-        [T, always(undefined)]
+        [T, always(null)]
       ]),
       head,
       getResolutions
@@ -29,4 +33,4 @@ const getSlotValues = cond([
   [T, always(undefined)]
 ])
 
-export default getSlotValues
+export default getSlotValue

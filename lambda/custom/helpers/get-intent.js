@@ -1,9 +1,5 @@
-import { compose, prop } from 'ramda'
-import getRequest from './get-request'
+import { prop } from 'ramda'
 
-const getIntent = compose(
-  prop('intent'),
-  getRequest
-)
+const getIntent = prop('intent')
 
 export default getIntent
