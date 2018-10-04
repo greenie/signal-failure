@@ -15,7 +15,7 @@ import isIntentRequest from '../helpers/is-intent-request'
 import intentNameIs from '../helpers/intent-name-is'
 import requestDialogIs from '../helpers/request-dialog-is'
 import getIntent from '../helpers/get-intent'
-import getSlotValues from '../helpers/get-slot-values'
+import getSlotValue from '../helpers/get-slot-value'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
 import fullLineName from '../helpers/full-line-name'
 import log from '../helpers/log'
@@ -34,7 +34,10 @@ const InProgressGetLineDisruptionsIntent = {
   handle (handlerInput) {
     log('In InProgressGetLineDisruptionsIntent')
 
-    const intent = getIntent(handlerInput)
+    const intent = compose(
+      getIntent,
+      getRequest
+    )(handlerInput)
 
     return handlerInput.responseBuilder
       .addDelegateDirective(intent)
@@ -58,11 +61,10 @@ const GetLineDisruptionsIntent = {
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
     const line = compose(
-      prop('value'),
-      head,
-      getSlotValues,
+      getSlotValue,
       path(['slots', 'Line']),
-      getIntent
+      getIntent,
+      getRequest
     )(handlerInput)
 
     if (line.id === 'elizabeth') {
