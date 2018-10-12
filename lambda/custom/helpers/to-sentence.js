@@ -1,18 +1,24 @@
 import {
-  cond,
+  always,
   compose,
-  equals,
-  length,
-  converge,
   concat,
+  cond,
+  converge,
+  equals,
   head,
-  last,
-  T,
+  isEmpty,
   join,
-  slice
+  last,
+  length,
+  slice,
+  T
 } from 'ramda'
 
 const toSentence = cond([
+  [
+    isEmpty,
+    always('')
+  ],
   [
     compose(equals(1), length),
     head
