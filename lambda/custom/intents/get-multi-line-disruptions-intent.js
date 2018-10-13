@@ -11,6 +11,7 @@ import {
 } from 'ramda'
 import fullLineName from '../helpers/full-line-name'
 import getAllSlotsValues from '../helpers/get-all-slots-values'
+import getDescriptions from '../helpers/get-descriptions'
 import getIntent from '../helpers/get-intent'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
@@ -82,7 +83,7 @@ const GetMultiLineDisruptionsIntent = {
         .getResponse()
     }
 
-    const [title, description] = cond([
+    const [title, descriptionToSpeak, descriptionForCard] = cond([
       [
         isEmpty,
         () => {
@@ -93,6 +94,7 @@ const GetMultiLineDisruptionsIntent = {
 
           return [
             t('GOOD_SERVICE_TITLE'),
+            t('GOOD_SERVICE_MESSAGE', message),
             t('GOOD_SERVICE_MESSAGE', message)
           ]
         }
@@ -103,17 +105,22 @@ const GetMultiLineDisruptionsIntent = {
           t('DELAYS_TITLE'),
           compose(
             join('\n\n'),
-            map(prop('description'))
+            getDescriptions
+          )(disruptions),
+          compose(
+            join,
+            map(d => `<p>${d}</p>`),
+            getDescriptions
           )(disruptions)
         ]
       ]
     ])(disruptions)
 
     return handlerInput.responseBuilder
-      .speak(description)
+      .speak(descriptionToSpeak)
       .withSimpleCard(
         title,
-        description
+        descriptionForCard
       )
       .getResponse()
   }
