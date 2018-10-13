@@ -1,10 +1,10 @@
 import {
-  compose,
-  props,
-  map,
-  filter,
   complement,
-  isNil
+  compose,
+  filter,
+  isNil,
+  map,
+  props
 } from 'ramda'
 import getSlotValue from './get-slot-value'
 

@@ -1,12 +1,12 @@
 import {
+  always,
   compose,
   cond,
-  prop,
-  pathEq,
-  path,
   head,
-  T,
-  always
+  path,
+  pathEq,
+  prop,
+  T
 } from 'ramda'
 
 const getResolutions = path(['resolutions', 'resolutionsPerAuthority'])

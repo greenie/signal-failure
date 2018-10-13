@@ -1,24 +1,22 @@
 import {
   allPass,
+  always,
   complement,
   compose,
-  head,
-  prop,
-  path,
-  always,
   cond,
   isEmpty,
+  path,
   T
 } from 'ramda'
-import getRequest from '../helpers/get-request'
-import isIntentRequest from '../helpers/is-intent-request'
-import intentNameIs from '../helpers/intent-name-is'
-import requestDialogIs from '../helpers/request-dialog-is'
-import getIntent from '../helpers/get-intent'
-import getSlotValue from '../helpers/get-slot-value'
-import getLineDisruptions from '../tfl-api/get-line-disruptions'
 import fullLineName from '../helpers/full-line-name'
+import getIntent from '../helpers/get-intent'
+import getRequest from '../helpers/get-request'
+import getSlotValue from '../helpers/get-slot-value'
+import intentNameIs from '../helpers/intent-name-is'
+import isIntentRequest from '../helpers/is-intent-request'
 import log from '../helpers/log'
+import requestDialogIs from '../helpers/request-dialog-is'
+import getLineDisruptions from '../tfl-api/get-line-disruptions'
 
 const InProgressGetLineDisruptionsIntent = {
   canHandle (handlerInput) {
