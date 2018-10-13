@@ -35,47 +35,17 @@
           ],
           "samples": [
             "are there {Fault} on {Line}",
-            "are there {Fault} on {Line} line",
-            "are there {Fault} on the {Line}",
-            "are there {Fault} on the {Line} line",
             "is {Line} {Fault}",
-            "is {Line} line {Fault}",
-            "is the {Line} {Fault}",
-            "is the {Line} line {Fault}",
             "if {Line} is {Fault}",
-            "if {Line} line is {Fault}",
-            "if the {Line} is {Fault}",
-            "if the {Line} line is {Fault}",
             "if there are {Fault} on {Line}",
-            "if there are {Fault} on the {Line}",
             "does {Line} have {Fault}",
             "does {Line} line have {Fault}",
-            "does the {Line} have {Fault}",
-            "does the {Line} line have {Fault}",
             "check {Line} for {Fault}",
-            "check {Line} line for {Fault}",
-            "check the {Line} for {Fault}",
-            "check the {Line} line for {Fault}",
             "check for {Fault} on {Line}",
-            "check for {Fault} on {Line} line",
-            "check for {Fault} on the {Line}",
-            "check for {Fault} on the {Line} line",
             "to check {Line} for {Fault}",
-            "to check {Line} line for {Fault}",
-            "to check the {Line} for {Fault}",
-            "to check the {Line} line for {Fault}",
             "to check for {Fault} on {Line}",
-            "to check for {Fault} on {Line} line",
-            "to check for {Fault} on the {Line}",
-            "to check for {Fault} on the {Line} line",
             "for the status of {Line}",
-            "for the status of {Line} line",
-            "for the status of the {Line}",
-            "for the status of the {Line} line",
-            "check the status of {Line}",
-            "check the status of {Line} line",
-            "check the status of the {Line}",
-            "check the status of the {Line} line"
+            "check the status of {Line}"
           ]
         },
         {
@@ -91,23 +61,81 @@
             }
           ],
           "samples": [
-            "are there {Fault} on the {Mode}",
-            "is the {Mode} {Fault}",
-            "if the {Mode} is {Fault}",
-            "if there are {Fault} on the {Mode}",
-            "does the {Mode} have {Fault}",
-            "check the {Mode} for {Fault}",
-            "check for {Fault} on the {Mode}",
-            "to check the {Mode} for {Fault}",
-            "to check for {Fault} on the {Mode}",
-            "for the status of the {Mode}",
-            "check the status of the {Mode}"
+            "are there {Fault} on {Mode}",
+            "is {Mode} {Fault}",
+            "if {Mode} is {Fault}",
+            "if there are {Fault} on {Mode}",
+            "does {Mode} have {Fault}",
+            "check {Mode} for {Fault}",
+            "check for {Fault} on {Mode}",
+            "to check {Mode} for {Fault}",
+            "to check for {Fault} on {Mode}",
+            "for the status of {Mode}",
+            "check the status of {Mode}"
           ]
+        },
+        {
+          "name": "GetMultiLineDisruptionsIntent",
+          "slots": [
+            {
+              "name": "LineA",
+              "type": "LineName",
+              "samples": [
+                "the {LineA} line",
+                "the {LineA}",
+                "{LineA}"
+              ]
+            },
+            {
+              "name": "LineB",
+              "type": "LineName",
+              "samples": [
+                "the {LineB} line",
+                "the {LineB}",
+                "{LineB}"
+              ]
+            },
+            {
+              "name": "LineC",
+              "type": "LineName"
+            },
+            {
+              "name": "Fault",
+              "type": "FaultName"
+            }
+          ],
+          "samples": [
+            "are there {Fault} on {LineA} and {LineB}",
+            "are there {Fault} on {LineA} and {LineB} and {LineC}",
+            "is {LineA} and {LineB} {Fault}",
+            "is {LineA} and {LineB} and {LineC} {Fault}",
+            "if {LineA} and {LineB} is {Fault}",
+            "if {LineA} and {LineB} and {LineC} is {Fault}",
+            "if there are {Fault} on {LineA} and {LineB}",
+            "if there are {Fault} on {LineA} and {LineB} and {LineC}",
+            "does {LineA} and {LineB} have {Fault}",
+            "does {LineA} and {LineB} and {LineC} have {Fault}",
+            "check {LineA} and {LineB} for {Fault}",
+            "check {LineA} and {LineB} and {LineC} for {Fault}",
+            "check for {Fault} on {LineA} and {LineB}",
+            "check for {Fault} on {LineA} and {LineB} and {LineC}",
+            "to check {LineA} and {LineB} for {Fault}",
+            "to check {LineA} and {LineB} and {LineC} for {Fault}",
+            "to check for {Fault} on {LineA} and {LineB}",
+            "to check for {Fault} on {LineA} and {LineB} and {LineC}",
+            "for the status of {LineA} and {LineB}",
+            "for the status of {LineA} and {LineB} and {LineC}",
+            "check the status of {LineA} and {LineB}",
+            "check the status of {LineA} and {LineB} and {LineC}"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
         }
       ],
       "types": [
         {
-          "name": "FaultName",
           "values": [
             {
               "id": "delay",
@@ -139,10 +167,10 @@
                 ]
               }
             }
-          ]
+          ],
+          "name": "FaultName"
         },
         {
-          "name": "LineName",
           "values": [
             {
               "id": "elizabeth",
@@ -156,19 +184,31 @@
             {
               "id": "northern",
               "name": {
-                "value": "Northern"
+                "value": "Northern",
+                "synonyms": [
+                  "the northern line",
+                  "northern line"
+                ]
               }
             },
             {
               "id": "jubilee",
               "name": {
-                "value": "Jubilee"
+                "value": "Jubilee",
+                "synonyms": [
+                  "the jubilee line",
+                  "jubilee line"
+                ]
               }
             },
             {
               "id": "circle",
               "name": {
-                "value": "Circle"
+                "value": "Circle",
+                "synonyms": [
+                  "the circle line",
+                  "circle line"
+                ]
               }
             },
             {
@@ -176,6 +216,9 @@
               "name": {
                 "value": "DLR",
                 "synonyms": [
+                  "the docklands light railway",
+                  "the dealer",
+                  "the dlr",
                   "docklands light railway",
                   "dealer"
                 ]
@@ -186,6 +229,12 @@
               "name": {
                 "value": "Hammersmith and City",
                 "synonyms": [
+                  "the hammersmith cityline",
+                  "the hammersmith city",
+                  "the hammersmith and city line",
+                  "the hammersmith city line",
+                  "hammersmith city line",
+                  "hammersmith and city line",
                   "hammersmith city",
                   "hammersmith cityline"
                 ]
@@ -196,6 +245,7 @@
               "name": {
                 "value": "Overground",
                 "synonyms": [
+                  "the overground",
                   "london overground"
                 ]
               }
@@ -205,6 +255,12 @@
               "name": {
                 "value": "Waterloo and City",
                 "synonyms": [
+                  "the waterloo cityline",
+                  "the waterloo city",
+                  "the waterloo and city line",
+                  "the waterloo city line",
+                  "waterloo city line",
+                  "waterloo and city line",
                   "waterloo city",
                   "waterloo cityline"
                 ]
@@ -213,37 +269,61 @@
             {
               "id": "bakerloo",
               "name": {
-                "value": "Bakerloo"
+                "value": "Bakerloo",
+                "synonyms": [
+                  "the bakerloo line",
+                  "bakerloo line"
+                ]
               }
             },
             {
               "id": "central",
               "name": {
-                "value": "Central"
+                "value": "Central",
+                "synonyms": [
+                  "the central line",
+                  "central line"
+                ]
               }
             },
             {
               "id": "district",
               "name": {
-                "value": "District"
+                "value": "District",
+                "synonyms": [
+                  "the district line",
+                  "district line"
+                ]
               }
             },
             {
               "id": "metropolitan",
               "name": {
-                "value": "Metropolitan"
+                "value": "Metropolitan",
+                "synonyms": [
+                  "the metropolitan line",
+                  "metropolitan line"
+                ]
               }
             },
             {
               "id": "piccadilly",
               "name": {
-                "value": "Piccadilly"
+                "value": "Piccadilly",
+                "synonyms": [
+                  "the piccadilly line",
+                  "piccadilly line"
+                ]
               }
             },
             {
               "id": "victoria",
               "name": {
-                "value": "Victoria"
+                "value": "Victoria",
+                "synonyms": [
+                  "the victoria line",
+                  "victoria line"
+                ]
               }
             },
             {
@@ -252,22 +332,25 @@
                 "value": "TfL Rail"
               }
             }
-          ]
+          ],
+          "name": "LineName"
         },
         {
-          "name": "ModeName",
           "values": [
             {
               "id": "tube",
               "name": {
                 "value": "Underground",
                 "synonyms": [
+                  "the underground",
+                  "the tube",
                   "tube",
                   "london underground"
                 ]
               }
             }
-          ]
+          ],
+          "name": "ModeName"
         }
       ]
     },
@@ -276,13 +359,12 @@
         {
           "name": "GetLineDisruptionsIntent",
           "confirmationRequired": false,
-          "prompts": {},
           "slots": [
             {
               "name": "Line",
               "type": "LineName",
-              "confirmationRequired": false,
               "elicitationRequired": true,
+              "confirmationRequired": false,
               "prompts": {
                 "elicitation": "Elicit.Intent-GetLineDisruptionsIntent.IntentSlot-Line"
               }
@@ -290,9 +372,44 @@
             {
               "name": "Fault",
               "type": "FaultName",
-              "confirmationRequired": false,
               "elicitationRequired": false,
-              "prompts": {}
+              "confirmationRequired": false
+            }
+          ]
+        },
+        {
+          "name": "GetMultiLineDisruptionsIntent",
+          "confirmationRequired": false,
+          "slots": [
+            {
+              "name": "LineA",
+              "type": "LineName",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1084590486539.962116998631"
+              }
+            },
+            {
+              "name": "LineB",
+              "type": "LineName",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1084590486539.1268287655934"
+              }
+            },
+            {
+              "name": "LineC",
+              "type": "LineName",
+              "elicitationRequired": false,
+              "confirmationRequired": false
+            },
+            {
+              "name": "Fault",
+              "type": "FaultName",
+              "elicitationRequired": false,
+              "confirmationRequired": false
             }
           ]
         }
@@ -305,6 +422,24 @@
           {
             "type": "PlainText",
             "value": "Which line would you like me to check?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1084590486539.962116998631",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Which was the first line you'd like me to check?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1084590486539.1268287655934",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Which was the second line you'd like me to check?"
           }
         ]
       }
