@@ -1,13 +1,31 @@
+import {
+  allPass,
+  always,
+  append,
+  compose,
+  cond,
+  isEmpty,
+  join,
+  map,
+  T
+} from 'ramda'
 import getModeDisruptions from '../tfl-api/get-mode-disruptions'
+import getDescriptions from '../helpers/get-descriptions'
 import responseToSpeak from '../helpers/response-to-speak'
 import log from '../helpers/log'
+import isIntentRequest from '../helpers/is-intent-request'
+import intentNameIs from '../helpers/intent-name-is'
+import getRequest from '../helpers/get-request'
 
 const GetTubeDisruptionsIntent = {
   canHandle (handlerInput) {
-    const { request } = handlerInput.requestEnvelope
-
-    return request.type === 'IntentRequest' &&
-      request.intent.name === 'GetTubeDisruptionsIntent'
+    return compose(
+      allPass([
+        isIntentRequest,
+        intentNameIs('GetTubeDisruptionsIntent')
+      ]),
+      getRequest
+    )(handlerInput)
   },
   async handle (handlerInput) {
     log('In GetTubeDisruptionsIntent')
@@ -25,37 +43,42 @@ const GetTubeDisruptionsIntent = {
         .getResponse()
     }
 
-    if (disruptions.length === 0) {
-      const goodService = t('GOOD_SERVICE_ALL_LINES_MESSAGE')
-
-      return handlerInput.responseBuilder
-        .speak(goodService)
-        .withSimpleCard(
+    const [title, descriptionToSpeak, descriptionForCard] = cond([
+      [
+        isEmpty,
+        always([
           t('GOOD_SERVICE_TITLE'),
-          goodService
-        )
-        .getResponse()
-    } else {
-      const uniqueDisruptions = new Set(
-        disruptions
-          .map(({ description }) => description)
-          .filter(d => d)
-      )
-
-      const description = Array.from(uniqueDisruptions)
-        .concat([t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')])
-
-      const descriptionToSpeak = responseToSpeak(description.map(d => `<p>${d}</p>`).join(''))
-      const descriptionForCard = description.join('\n\n')
-
-      return handlerInput.responseBuilder
-        .speak(descriptionToSpeak)
-        .withSimpleCard(
+          t('GOOD_SERVICE_ALL_LINES_MESSAGE'),
+          t('GOOD_SERVICE_ALL_LINES_MESSAGE')
+        ])
+      ],
+      [
+        T,
+        disruptions => [
           t('DELAYS_TITLE'),
-          descriptionForCard
-        )
-        .getResponse()
-    }
+          compose(
+            join('\n\n'),
+            responseToSpeak,
+            append(t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')),
+            getDescriptions
+          )(disruptions),
+          compose(
+            join,
+            map(d => `<p>${d}</p>`),
+            append(t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')),
+            getDescriptions
+          )(disruptions)
+        ]
+      ]
+    ])(disruptions)
+
+    return handlerInput.responseBuilder
+      .speak(descriptionToSpeak)
+      .withSimpleCard(
+        title,
+        descriptionForCard
+      )
+      .getResponse()
   }
 }
 
