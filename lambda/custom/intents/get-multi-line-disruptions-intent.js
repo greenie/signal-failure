@@ -6,6 +6,7 @@ import {
   isEmpty,
   join,
   map,
+  pluck,
   prop,
   T
 } from 'ramda'
@@ -73,7 +74,7 @@ const GetMultiLineDisruptionsIntent = {
     let disruptions
 
     try {
-      disruptions = await getLineDisruptions(...map(prop('id'), lines))
+      disruptions = await getLineDisruptions(...pluck('id', lines))
     } catch (error) {
       log(error.message)
 

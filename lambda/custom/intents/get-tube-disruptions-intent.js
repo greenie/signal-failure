@@ -1,7 +1,7 @@
 import {
-  allPass,
   always,
   append,
+  both,
   compose,
   cond,
   isEmpty,
@@ -20,10 +20,10 @@ import getRequest from '../helpers/get-request'
 const GetTubeDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
-      allPass([
+      both(
         isIntentRequest,
         intentNameIs('GetTubeDisruptionsIntent')
-      ]),
+      ),
       getRequest
     )(handlerInput)
   },

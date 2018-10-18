@@ -1,17 +1,15 @@
 import {
-  complement,
   compose,
-  filter,
   isEmpty,
-  map,
-  prop,
+  pluck,
+  reject,
   uniq
 } from 'ramda'
 
 const getDescriptions = compose(
   uniq,
-  filter(complement(isEmpty)),
-  map(prop('description'))
+  reject(isEmpty),
+  pluck('description')
 )
 
 export default getDescriptions

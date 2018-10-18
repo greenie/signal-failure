@@ -1,15 +1,14 @@
 import {
-  complement,
   compose,
-  filter,
   isNil,
   map,
-  props
+  props,
+  reject
 } from 'ramda'
 import getSlotValue from './get-slot-value'
 
 const getAllSlotsValues = slots => compose(
-  filter(complement(isNil)),
+  reject(isNil),
   map(getSlotValue),
   props(slots)
 )
