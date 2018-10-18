@@ -17,7 +17,6 @@ import getIntent from '../helpers/get-intent'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
 import isIntentRequest from '../helpers/is-intent-request'
-import log from '../helpers/log'
 import responseToSpeak from '../helpers/response-to-speak'
 import requestDialogIs from '../helpers/request-dialog-is'
 import toSentence from '../helpers/to-sentence'
@@ -35,7 +34,7 @@ const InProgressGetMultiLineDisruptionsIntent = {
     )(handlerInput)
   },
   handle (handlerInput) {
-    log('In InProgressGetMultiLineDisruptionsIntent')
+    console.info('In InProgressGetMultiLineDisruptionsIntent')
 
     const intent = compose(
       getIntent,
@@ -60,7 +59,7 @@ const GetMultiLineDisruptionsIntent = {
     )(handlerInput)
   },
   async handle (handlerInput) {
-    log('In GetMultiLineDisruptionsIntent')
+    console.info('In GetMultiLineDisruptionsIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
     const slots = ['LineA', 'LineB', 'LineC']
@@ -76,7 +75,7 @@ const GetMultiLineDisruptionsIntent = {
     try {
       disruptions = await getLineDisruptions(...pluck('id', lines))
     } catch (error) {
-      log(error.message)
+      console.error(error.message)
 
       return handlerInput.responseBuilder
         .speak(t('REQUEST_ERROR_MESSAGE'))

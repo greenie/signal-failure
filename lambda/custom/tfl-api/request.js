@@ -1,5 +1,4 @@
 import axios from 'axios'
-import log from '../helpers/log'
 import RequestError from '../helpers/axios/request-error'
 import ResponseError from '../helpers/axios/response-error'
 
@@ -18,7 +17,7 @@ const request = async path => {
 
   try {
     const { status, data, headers } = await axios(requestOptions)
-    log({ status, data, headers })
+    console.log(JSON.stringify({ status, data, headers }, null, 2))
     return data
   } catch (error) {
     const { message, request, response } = error

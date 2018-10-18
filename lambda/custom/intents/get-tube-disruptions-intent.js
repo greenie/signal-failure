@@ -12,7 +12,6 @@ import {
 import getModeDisruptions from '../tfl-api/get-mode-disruptions'
 import getDescriptions from '../helpers/get-descriptions'
 import responseToSpeak from '../helpers/response-to-speak'
-import log from '../helpers/log'
 import isIntentRequest from '../helpers/is-intent-request'
 import intentNameIs from '../helpers/intent-name-is'
 import getRequest from '../helpers/get-request'
@@ -28,7 +27,7 @@ const GetTubeDisruptionsIntent = {
     )(handlerInput)
   },
   async handle (handlerInput) {
-    log('In GetTubeDisruptionsIntent')
+    console.info('In GetTubeDisruptionsIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
     let disruptions
@@ -36,7 +35,7 @@ const GetTubeDisruptionsIntent = {
     try {
       disruptions = await getModeDisruptions('tube')
     } catch (error) {
-      log(error.message)
+      console.error(error.message)
 
       return handlerInput.responseBuilder
         .speak(t('REQUEST_ERROR_MESSAGE'))

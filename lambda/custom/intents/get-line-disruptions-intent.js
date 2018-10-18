@@ -14,7 +14,6 @@ import getRequest from '../helpers/get-request'
 import getSlotValue from '../helpers/get-slot-value'
 import intentNameIs from '../helpers/intent-name-is'
 import isIntentRequest from '../helpers/is-intent-request'
-import log from '../helpers/log'
 import responseToSpeak from '../helpers/response-to-speak'
 import requestDialogIs from '../helpers/request-dialog-is'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
@@ -31,7 +30,7 @@ const InProgressGetLineDisruptionsIntent = {
     )(handlerInput)
   },
   handle (handlerInput) {
-    log('In InProgressGetLineDisruptionsIntent')
+    console.info('In InProgressGetLineDisruptionsIntent')
 
     const intent = compose(
       getIntent,
@@ -56,7 +55,7 @@ const GetLineDisruptionsIntent = {
     )(handlerInput)
   },
   async handle (handlerInput) {
-    log('In GetLineDisruptionsIntent')
+    console.info('In GetLineDisruptionsIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
     const line = compose(
@@ -81,7 +80,7 @@ const GetLineDisruptionsIntent = {
     try {
       disruptions = await getLineDisruptions(line.id)
     } catch (error) {
-      log(error.message)
+      console.error(error.message)
 
       return handlerInput.responseBuilder
         .speak(t('REQUEST_ERROR_MESSAGE'))

@@ -1,8 +1,6 @@
-import log from '../helpers/log'
-
 const LoggingInterceptor = {
   process (handlerInput) {
-    log(handlerInput.requestEnvelope)
+    console.log(JSON.stringify(handlerInput.requestEnvelope, null, 2))
   }
 }
 

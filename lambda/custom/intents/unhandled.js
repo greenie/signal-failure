@@ -1,12 +1,10 @@
-import log from '../helpers/log'
-
 const Unhandled = {
   canHandle () {
     return true
   },
   handle (handlerInput, error) {
-    log('In Unhandled')
-    log(error)
+    console.info('In Unhandled')
+    console.error(error)
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
 

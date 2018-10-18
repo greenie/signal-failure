@@ -1,5 +1,4 @@
 import { both, compose, or } from 'ramda'
-import log from '../helpers/log'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
 import isLaunchRequest from '../helpers/is-launch-request'
@@ -19,7 +18,7 @@ const HelpIntent = {
     )(handlerInput)
   },
   handle (handlerInput) {
-    log('In HelpIntent')
+    console.info('In HelpIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
 

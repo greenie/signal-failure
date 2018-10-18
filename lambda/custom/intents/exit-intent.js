@@ -2,7 +2,6 @@ import { both, compose, or } from 'ramda'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
 import isIntentRequest from '../helpers/is-intent-request'
-import log from '../helpers/log'
 
 const ExitIntent = {
   canHandle (handlerInput) {
@@ -18,7 +17,7 @@ const ExitIntent = {
     )(handlerInput)
   },
   handle (handlerInput) {
-    log('In ExitIntent')
+    console.info('In ExitIntent')
 
     const { t } = handlerInput.attributesManager.getRequestAttributes()
 
