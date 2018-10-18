@@ -1,13 +1,22 @@
+import { both, compose, or } from 'ramda'
 import log from '../helpers/log'
+import getRequest from '../helpers/get-request'
+import intentNameIs from '../helpers/intent-name-is'
+import isLaunchRequest from '../helpers/is-launch-request'
+import isIntentRequest from '../helpers/is-intent-request'
 
 const HelpIntent = {
   canHandle (handlerInput) {
-    const { request } = handlerInput.requestEnvelope
-
-    return request.type === 'LaunchRequest' || (
-      request.type === 'IntentRequest' &&
-      request.intent.name === 'AMAZON.HelpIntent'
-    )
+    return compose(
+      or(
+        isLaunchRequest,
+        both(
+          isIntentRequest,
+          intentNameIs('AMAZON.HelpIntent')
+        )
+      ),
+      getRequest
+    )(handlerInput)
   },
   handle (handlerInput) {
     log('In HelpIntent')
