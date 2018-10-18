@@ -104,8 +104,8 @@ const GetMultiLineDisruptionsIntent = {
         disruptions => [
           t('DELAYS_TITLE'),
           compose(
-            join('\n\n'),
             responseToSpeak,
+            join('\n\n'),
             getDescriptions
           )(disruptions),
           compose(
