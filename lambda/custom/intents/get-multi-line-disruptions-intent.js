@@ -51,11 +51,9 @@ const GetMultiLineDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
       allPass([
-        [
-          isIntentRequest,
-          intentNameIs('GetMultiLineDisruptionsIntent'),
-          requestDialogIs('COMPLETED')
-        ]
+        isIntentRequest,
+        intentNameIs('GetMultiLineDisruptionsIntent'),
+        requestDialogIs('COMPLETED')
       ]),
       getRequest
     )(handlerInput)
