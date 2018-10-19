@@ -1,4 +1,4 @@
-import { both, compose, or } from 'ramda'
+import { both, compose, either } from 'ramda'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
 import isLaunchRequest from '../helpers/is-launch-request'
@@ -7,7 +7,7 @@ import isIntentRequest from '../helpers/is-intent-request'
 const HelpIntent = {
   canHandle (handlerInput) {
     return compose(
-      or(
+      either(
         isLaunchRequest,
         both(
           isIntentRequest,

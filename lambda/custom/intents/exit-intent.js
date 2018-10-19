@@ -1,4 +1,4 @@
-import { both, compose, or } from 'ramda'
+import { both, compose, either } from 'ramda'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
 import isIntentRequest from '../helpers/is-intent-request'
@@ -8,7 +8,7 @@ const ExitIntent = {
     return compose(
       both(
         isIntentRequest,
-        or(
+        either(
           intentNameIs('AMAZON.StopIntent'),
           intentNameIs('AMAZON.CancelIntent')
         )
