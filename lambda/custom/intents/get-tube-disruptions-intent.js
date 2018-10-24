@@ -11,7 +11,6 @@ import {
 } from 'ramda'
 import getModeDisruptions from '../tfl-api/get-mode-disruptions'
 import getDescriptions from '../helpers/get-descriptions'
-import responseToSpeak from '../helpers/response-to-speak'
 import isIntentRequest from '../helpers/is-intent-request'
 import intentNameIs from '../helpers/intent-name-is'
 import getRequest from '../helpers/get-request'
@@ -56,7 +55,6 @@ const GetTubeDisruptionsIntent = {
         disruptions => [
           t('DELAYS_TITLE'),
           compose(
-            responseToSpeak,
             join('\n\n'),
             append(t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')),
             getDescriptions

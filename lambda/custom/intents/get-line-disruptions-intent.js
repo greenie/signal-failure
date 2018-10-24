@@ -14,7 +14,6 @@ import getRequest from '../helpers/get-request'
 import getSlotValue from '../helpers/get-slot-value'
 import intentNameIs from '../helpers/intent-name-is'
 import isIntentRequest from '../helpers/is-intent-request'
-import responseToSpeak from '../helpers/response-to-speak'
 import requestDialogIs from '../helpers/request-dialog-is'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
 
@@ -105,7 +104,7 @@ const GetLineDisruptionsIntent = {
     ])(disruptions)
 
     return handlerInput.responseBuilder
-      .speak(responseToSpeak(description))
+      .speak(description)
       .withSimpleCard(
         title,
         description

@@ -17,7 +17,6 @@ import getIntent from '../helpers/get-intent'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
 import isIntentRequest from '../helpers/is-intent-request'
-import responseToSpeak from '../helpers/response-to-speak'
 import requestDialogIs from '../helpers/request-dialog-is'
 import toSentence from '../helpers/to-sentence'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
@@ -93,7 +92,7 @@ const GetMultiLineDisruptionsIntent = {
 
           return [
             t('GOOD_SERVICE_TITLE'),
-            t('GOOD_SERVICE_MESSAGE', responseToSpeak(message)),
+            t('GOOD_SERVICE_MESSAGE', message),
             t('GOOD_SERVICE_MESSAGE', message)
           ]
         }
@@ -103,7 +102,6 @@ const GetMultiLineDisruptionsIntent = {
         disruptions => [
           t('DELAYS_TITLE'),
           compose(
-            responseToSpeak,
             join('\n\n'),
             getDescriptions
           )(disruptions),
