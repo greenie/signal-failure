@@ -60,7 +60,7 @@ const GetTubeDisruptionsIntent = {
             getDescriptions
           )(disruptions),
           compose(
-            join,
+            join(''),
             map(d => `<p>${d}</p>`),
             append(t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')),
             getDescriptions

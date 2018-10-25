@@ -106,7 +106,7 @@ const GetMultiLineDisruptionsIntent = {
             getDescriptions
           )(disruptions),
           compose(
-            join,
+            join(''),
             map(d => `<p>${d}</p>`),
             getDescriptions
           )(disruptions)
