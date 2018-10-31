@@ -102,12 +102,12 @@ const GetMultiLineDisruptionsIntent = {
         disruptions => [
           t('DELAYS_TITLE'),
           compose(
-            join('\n\n'),
+            join(''),
+            map(d => `<p>${d}</p>`),
             getDescriptions
           )(disruptions),
           compose(
-            join(''),
-            map(d => `<p>${d}</p>`),
+            join('\n\n'),
             getDescriptions
           )(disruptions)
         ]

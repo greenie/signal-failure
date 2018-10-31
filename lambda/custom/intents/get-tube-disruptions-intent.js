@@ -55,13 +55,13 @@ const GetTubeDisruptionsIntent = {
         disruptions => [
           t('DELAYS_TITLE'),
           compose(
-            join('\n\n'),
+            join(''),
+            map(d => `<p>${d}</p>`),
             append(t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')),
             getDescriptions
           )(disruptions),
           compose(
-            join(''),
-            map(d => `<p>${d}</p>`),
+            join('\n\n'),
             append(t('GOOD_SERVICE_ALL_OTHER_LINES_MESSAGE')),
             getDescriptions
           )(disruptions)
