@@ -1,0 +1,80 @@
+{
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.9a319663-acd6-4bd2-880b-0b1caa354505",
+    "timestamp": "2018-10-03T21:10:25Z",
+    "locale": "en-GB",
+    "intent": {
+      "name": "GetMultiLineDisruptionsIntent",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "Fault": {
+          "name": "Fault",
+          "value": "delayed",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.0b515ba2-355b-4a88-9c7e-b2f3add1fa05.FaultName",
+                "status": {
+                  "code": "ER_SUCCESS_MATCH"
+                },
+                "values": [
+                  {
+                    "value": {
+                      "name": "delay",
+                      "id": "delay"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "confirmationStatus": "NONE"
+        },
+        "LineA": {
+          "name": "LineA",
+          "value": "the jubilee",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.0b515ba2-355b-4a88-9c7e-b2f3add1fa05.LineName",
+                "status": {
+                  "code": "ER_SUCCESS_MATCH"
+                },
+                "values": [
+                  {
+                    "value": {
+                      "name": "Jubilee",
+                      "id": "jubilee"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "confirmationStatus": "NONE"
+        },
+        "LineB": {
+          "name": "LineB",
+          "value": "baker line",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.0b515ba2-355b-4a88-9c7e-b2f3add1fa05.LineName",
+                "status": {
+                  "code": "ER_SUCCESS_NO_MATCH"
+                }
+              }
+            ]
+          },
+          "confirmationStatus": "NONE"
+        },
+        "LineC": {
+          "name": "LineC",
+          "confirmationStatus": "NONE"
+        }
+      }
+    },
+    "dialogState": "STARTED"
+  }
+}

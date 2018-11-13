@@ -3,6 +3,7 @@
   "extends": ["standard"],
   "env": {
     "browser": false,
-    "node": true
+    "node": true,
+    "mocha": true
   }
 }
