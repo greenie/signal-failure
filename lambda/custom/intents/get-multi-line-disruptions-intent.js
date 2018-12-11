@@ -35,13 +35,8 @@ const InProgressGetMultiLineDisruptionsIntent = {
   handle (handlerInput) {
     console.info('In InProgressGetMultiLineDisruptionsIntent')
 
-    const intent = compose(
-      getIntent,
-      getRequest
-    )(handlerInput)
-
     return handlerInput.responseBuilder
-      .addDelegateDirective(intent)
+      .addDelegateDirective()
       .getResponse()
   }
 }

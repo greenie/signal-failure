@@ -31,13 +31,8 @@ const InProgressGetLineDisruptionsIntent = {
   handle (handlerInput) {
     console.info('In InProgressGetLineDisruptionsIntent')
 
-    const intent = compose(
-      getIntent,
-      getRequest
-    )(handlerInput)
-
     return handlerInput.responseBuilder
-      .addDelegateDirective(intent)
+      .addDelegateDirective()
       .getResponse()
   }
 }
