@@ -359,6 +359,7 @@
         {
           "name": "GetLineDisruptionsIntent",
           "confirmationRequired": false,
+          "prompts": {},
           "slots": [
             {
               "name": "Line",
@@ -367,19 +368,27 @@
               "confirmationRequired": false,
               "prompts": {
                 "elicitation": "Elicit.Intent-GetLineDisruptionsIntent.IntentSlot-Line"
-              }
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "Slot.Validation.142505324104.1108012046302.980056596686"
+                }
+              ]
             },
             {
               "name": "Fault",
               "type": "FaultName",
               "elicitationRequired": false,
-              "confirmationRequired": false
+              "confirmationRequired": false,
+              "prompts": {}
             }
           ]
         },
         {
           "name": "GetMultiLineDisruptionsIntent",
           "confirmationRequired": false,
+          "prompts": {},
           "slots": [
             {
               "name": "LineA",
@@ -388,7 +397,13 @@
               "confirmationRequired": false,
               "prompts": {
                 "elicitation": "Elicit.Slot.1084590486539.962116998631"
-              }
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "Slot.Validation.20676453947.1528217077903.1025370553797"
+                }
+              ]
             },
             {
               "name": "LineB",
@@ -397,19 +412,33 @@
               "confirmationRequired": false,
               "prompts": {
                 "elicitation": "Elicit.Slot.1084590486539.1268287655934"
-              }
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "Slot.Validation.20676453947.700081273546.304187770361"
+                }
+              ]
             },
             {
               "name": "LineC",
               "type": "LineName",
               "elicitationRequired": false,
-              "confirmationRequired": false
+              "confirmationRequired": false,
+              "prompts": {},
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "Slot.Validation.20676453947.309896338442.333798321409"
+                }
+              ]
             },
             {
               "name": "Fault",
               "type": "FaultName",
               "elicitationRequired": false,
-              "confirmationRequired": false
+              "confirmationRequired": false,
+              "prompts": {}
             }
           ]
         }
@@ -440,6 +469,42 @@
           {
             "type": "PlainText",
             "value": "Which was the second line you'd like me to check?"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.142505324104.1108012046302.980056596686",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please say the name of the line again for me"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.20676453947.1528217077903.1025370553797",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please say the name of the first line again for me"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.20676453947.700081273546.304187770361",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please say the name of the second line again for me"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.20676453947.309896338442.333798321409",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please say the name of the third line again for me"
           }
         ]
       }
