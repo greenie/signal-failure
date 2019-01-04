@@ -13,7 +13,7 @@ import getIntent from '../helpers/get-intent'
 import getRequest from '../helpers/get-request'
 import getSlotValue from '../helpers/get-slot-value'
 import intentNameIs from '../helpers/intent-name-is'
-import isIntentRequest from '../helpers/is-intent-request'
+import requestTypeIs from '../helpers/request-type-is'
 import requestDialogIs from '../helpers/request-dialog-is'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
 
@@ -21,7 +21,7 @@ const InProgressGetLineDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
       allPass([
-        isIntentRequest,
+        requestTypeIs('IntentRequest'),
         intentNameIs('GetLineDisruptionsIntent'),
         complement(requestDialogIs('COMPLETED'))
       ]),
@@ -41,7 +41,7 @@ const GetLineDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
       allPass([
-        isIntentRequest,
+        requestTypeIs('IntentRequest'),
         intentNameIs('GetLineDisruptionsIntent'),
         requestDialogIs('COMPLETED')
       ]),

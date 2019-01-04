@@ -11,7 +11,7 @@ import {
 } from 'ramda'
 import getModeDisruptions from '../tfl-api/get-mode-disruptions'
 import getDescriptions from '../helpers/get-descriptions'
-import isIntentRequest from '../helpers/is-intent-request'
+import requestTypeIs from '../helpers/request-type-is'
 import intentNameIs from '../helpers/intent-name-is'
 import getRequest from '../helpers/get-request'
 
@@ -19,7 +19,7 @@ const GetTubeDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
       both(
-        isIntentRequest,
+        requestTypeIs('IntentRequest'),
         intentNameIs('GetTubeDisruptionsIntent')
       ),
       getRequest

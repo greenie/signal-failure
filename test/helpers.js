@@ -4,6 +4,7 @@ import getDescriptions from '../lambda/custom/helpers/get-descriptions'
 import getIntent from '../lambda/custom/helpers/get-intent'
 import getSlotValue from '../lambda/custom/helpers/get-slot-value'
 import intentNameIs from '../lambda/custom/helpers/intent-name-is'
+import requestTypeIs from '../lambda/custom/helpers/request-type-is'
 import toSentence from '../lambda/custom/helpers/to-sentence'
 import { request } from './request.json'
 
@@ -68,6 +69,15 @@ describe('Helpers', () => {
   describe('intentNameIs', () => {
     it('should return `true` if the intent name matches the input', () => {
       const actual = intentNameIs('GetMultiLineDisruptionsIntent')(request)
+      const expected = true
+
+      assert.strictEqual(actual, expected)
+    })
+  })
+
+  describe('requestTypeIs', () => {
+    it('should return `true` if the request type is IntentRequest', () => {
+      const actual = requestTypeIs('IntentRequest')(request)
       const expected = true
 
       assert.strictEqual(actual, expected)

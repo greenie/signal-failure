@@ -16,7 +16,7 @@ import getDescriptions from '../helpers/get-descriptions'
 import getIntent from '../helpers/get-intent'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
-import isIntentRequest from '../helpers/is-intent-request'
+import requestTypeIs from '../helpers/request-type-is'
 import requestDialogIs from '../helpers/request-dialog-is'
 import toSentence from '../helpers/to-sentence'
 import getLineDisruptions from '../tfl-api/get-line-disruptions'
@@ -25,7 +25,7 @@ const InProgressGetMultiLineDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
       allPass([
-        isIntentRequest,
+        requestTypeIs('IntentRequest'),
         intentNameIs('GetMultiLineDisruptionsIntent'),
         complement(requestDialogIs('COMPLETED'))
       ]),
@@ -45,7 +45,7 @@ const GetMultiLineDisruptionsIntent = {
   canHandle (handlerInput) {
     return compose(
       allPass([
-        isIntentRequest,
+        requestTypeIs('IntentRequest'),
         intentNameIs('GetMultiLineDisruptionsIntent'),
         requestDialogIs('COMPLETED')
       ]),
