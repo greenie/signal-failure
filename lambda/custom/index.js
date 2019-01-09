@@ -12,6 +12,7 @@ import GetTubeDisruptionsIntent from './intents/get-tube-disruptions-intent'
 import ExitIntent from './intents/exit-intent'
 import LocalisationInterceptor from './interceptors/localisation-interceptor'
 import LoggingInterceptor from './interceptors/logging-interceptor'
+import SessionEndedIntent from './intents/session-ended-intent'
 import SpeechInterceptor from './interceptors/speech-interceptor'
 import Unhandled from './intents/unhandled'
 
@@ -24,7 +25,8 @@ const handler = Alexa.SkillBuilders.custom()
     InProgressGetMultiLineDisruptionsIntent,
     GetMultiLineDisruptionsIntent,
     GetTubeDisruptionsIntent,
-    ExitIntent
+    ExitIntent,
+    SessionEndedIntent
   )
   .addRequestInterceptors(
     LoggingInterceptor,
