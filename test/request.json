@@ -36,6 +36,12 @@
               {
                 "authority": "LineName",
                 "status": {
+                  "code": "ER_SUCCESS_NO_MATCH"
+                }
+              },
+              {
+                "authority": "LineName",
+                "status": {
                   "code": "ER_SUCCESS_MATCH"
                 },
                 "values": [
