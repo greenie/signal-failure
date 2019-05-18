@@ -8,5 +8,8 @@ module.exports = {
   extends: [
     'standard',
     'plugin:import/recommended'
-  ]
+  ],
+  rules: {
+    'import/order': 'error'
+  }
 }
