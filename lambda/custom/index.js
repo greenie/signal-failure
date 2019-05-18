@@ -1,15 +1,10 @@
 import * as Alexa from 'ask-sdk-core'
-import HelpIntent from './intents/help-intent'
-import {
-  InProgressGetLineDisruptionsIntent,
-  GetLineDisruptionsIntent
-} from './intents/get-line-disruptions-intent'
-import {
-  InProgressGetMultiLineDisruptionsIntent,
-  GetMultiLineDisruptionsIntent
-} from './intents/get-multi-line-disruptions-intent'
-import GetTubeDisruptionsIntent from './intents/get-tube-disruptions-intent'
+
+import { GetLineDisruptionsIntent, InProgressGetLineDisruptionsIntent } from './intents/get-line-disruptions-intent'
+import { GetMultiLineDisruptionsIntent, InProgressGetMultiLineDisruptionsIntent } from './intents/get-multi-line-disruptions-intent'
 import ExitIntent from './intents/exit-intent'
+import GetTubeDisruptionsIntent from './intents/get-tube-disruptions-intent'
+import HelpIntent from './intents/help-intent'
 import LocalisationInterceptor from './interceptors/localisation-interceptor'
 import LoggingInterceptor from './interceptors/logging-interceptor'
 import SessionEndedIntent from './intents/session-ended-intent'

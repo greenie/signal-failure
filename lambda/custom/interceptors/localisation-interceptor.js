@@ -1,13 +1,13 @@
-import i18next from 'i18next'
 import sprintf from 'i18next-sprintf-postprocessor'
+import { use } from 'i18next'
+
 import translations from '../resources/translations'
 
 const LocalisationInterceptor = {
   async process (handlerInput) {
     const { attributesManager, requestEnvelope } = handlerInput
 
-    await i18next
-      .use(sprintf)
+    await use(sprintf)
       .init({
         lng: requestEnvelope.request.locale,
         overloadTranslationOptionHandler: sprintf.overloadTranslationOptionHandler,

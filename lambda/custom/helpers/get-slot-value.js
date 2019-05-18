@@ -1,15 +1,4 @@
-import {
-  always,
-  compose,
-  cond,
-  find,
-  head,
-  isNil,
-  path,
-  pathEq,
-  prop,
-  T
-} from 'ramda'
+import { T, always, compose, cond, find, head, isNil, path, pathEq, prop } from 'ramda'
 
 const getSlotValue = compose(
   cond([

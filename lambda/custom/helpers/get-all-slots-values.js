@@ -1,10 +1,5 @@
-import {
-  compose,
-  isNil,
-  map,
-  props,
-  reject
-} from 'ramda'
+import { compose, isNil, map, props, reject } from 'ramda'
+
 import getSlotValue from './get-slot-value'
 
 const getAllSlotsValues = slots => compose(

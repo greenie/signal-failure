@@ -1,4 +1,5 @@
 import {
+  T,
   always,
   compose,
   concat,
@@ -10,8 +11,7 @@ import {
   join,
   last,
   length,
-  slice,
-  T
+  slice
 } from 'ramda'
 
 const toSentence = cond([

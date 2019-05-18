@@ -1,25 +1,15 @@
-import {
-  allPass,
-  complement,
-  compose,
-  cond,
-  isEmpty,
-  join,
-  map,
-  pluck,
-  prop,
-  T
-} from 'ramda'
+import { T, allPass, complement, compose, cond, isEmpty, join, map, pluck, prop } from 'ramda'
+
 import fullLineName from '../helpers/full-line-name'
 import getAllSlotsValues from '../helpers/get-all-slots-values'
 import getDescriptions from '../helpers/get-descriptions'
 import getIntent from '../helpers/get-intent'
+import getLineDisruptions from '../tfl-api/get-line-disruptions'
 import getRequest from '../helpers/get-request'
 import intentNameIs from '../helpers/intent-name-is'
-import requestTypeIs from '../helpers/request-type-is'
 import requestDialogIs from '../helpers/request-dialog-is'
+import requestTypeIs from '../helpers/request-type-is'
 import toSentence from '../helpers/to-sentence'
-import getLineDisruptions from '../tfl-api/get-line-disruptions'
 
 const InProgressGetMultiLineDisruptionsIntent = {
   canHandle (handlerInput) {

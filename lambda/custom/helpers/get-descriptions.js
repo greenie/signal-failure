@@ -1,12 +1,4 @@
-import {
-  compose,
-  isEmpty,
-  map,
-  pluck,
-  reject,
-  trim,
-  uniq
-} from 'ramda'
+import { compose, isEmpty, map, pluck, reject, trim, uniq } from 'ramda'
 
 const getDescriptions = compose(
   uniq,

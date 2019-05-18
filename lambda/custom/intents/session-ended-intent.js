@@ -1,4 +1,5 @@
 import { compose } from 'ramda'
+
 import getRequest from '../helpers/get-request'
 import requestTypeIs from '../helpers/request-type-is'
 

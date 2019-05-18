@@ -1,19 +1,10 @@
-import {
-  always,
-  append,
-  both,
-  compose,
-  cond,
-  isEmpty,
-  join,
-  map,
-  T
-} from 'ramda'
-import getModeDisruptions from '../tfl-api/get-mode-disruptions'
+import { T, always, append, both, compose, cond, isEmpty, join, map } from 'ramda'
+
 import getDescriptions from '../helpers/get-descriptions'
-import requestTypeIs from '../helpers/request-type-is'
-import intentNameIs from '../helpers/intent-name-is'
+import getModeDisruptions from '../tfl-api/get-mode-disruptions'
 import getRequest from '../helpers/get-request'
+import intentNameIs from '../helpers/intent-name-is'
+import requestTypeIs from '../helpers/request-type-is'
 
 const GetTubeDisruptionsIntent = {
   canHandle (handlerInput) {
