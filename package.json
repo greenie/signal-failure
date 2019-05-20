@@ -22,10 +22,11 @@
   },
   "homepage": "https://github.com/greenie/signal-failure#readme",
   "dependencies": {
-    "ask-sdk-core": "^2.3.0",
-    "ask-sdk-model": "^1.11.1",
+    "ask-sdk-core": "^2.5.2",
+    "ask-sdk-model": "^1.15.1",
     "axios": "^0.18.0",
-    "i18next": "^15.1.1",
+    "core-js": "^3.1.0",
+    "i18next": "^15.1.2",
     "i18next-sprintf-postprocessor": "^0.2.2",
     "lodash": ">=4.17.11"
   },
@@ -47,8 +48,8 @@
     "husky": "^2.3.0",
     "lint-staged": "^8.1.7",
     "mocha": "^6.1.4",
-    "serverless": "^1.42.3",
+    "serverless": "^1.43.0",
     "serverless-webpack": "^5.3.0",
-    "webpack": "^4.31.0"
+    "webpack": "^4.32.0"
   }
 }
