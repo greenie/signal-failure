@@ -1,7 +1,7 @@
 {
   "en-GB": {
     "translation": {
-      "HELP_MESSAGE": "You can ask me to check for delays on London Underground, Overground, DLR, or TfL Rail lines. You can also say stop to quit. <break strength=\"strong\" /> %s",
+      "HELP_MESSAGE": "You can ask me to check for delays on London Underground, Overground, <say-as interpret-as=\"spell-out\">DLR</say-as>, or TfL Rail lines. You can also say stop to quit. <break strength=\"strong\" /> %s",
       "HELP_REPROMPT_MESSAGE": "What would you like me to do?",
       "GOOD_SERVICE_TITLE": "Good Service",
       "GOOD_SERVICE_MESSAGE": "There is a good service on %s.",
